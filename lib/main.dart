@@ -1,122 +1,176 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MBTIApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MBTIApp extends StatelessWidget {
+  const MBTIApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'MBTI Go',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+        useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MBTIHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class MBTIHomePage extends StatefulWidget {
+  const MBTIHomePage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MBTIHomePage> createState() => _MBTIHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+class _MBTIHomePageState extends State<MBTIHomePage> {
+  final List<Map<String, String>> mbtiTypes = [
+    {'type': 'ENFJ', 'name': 'Protagonist', 'image': 'assets/ENFJ_Protagonist.jpg'},
+    {'type': 'ENFP', 'name': 'Campaigner', 'image': 'assets/ENFP_Campaigner.jpg'},
+    {'type': 'ENTJ', 'name': 'Commander', 'image': 'assets/ENTJ_Commander.jpg'},
+    {'type': 'ENTP', 'name': 'Debater', 'image': 'assets/ENTP_Debater.jpg'},
+    {'type': 'ESFJ', 'name': 'Consul', 'image': 'assets/ESFJ_Consul.jpg'},
+    {'type': 'ESFP', 'name': 'Entertainer', 'image': 'assets/ESFP_Entertainer.jpg'},
+    {'type': 'ESTJ', 'name': 'Executive', 'image': 'assets/ESTJ_Executive.jpg'},
+    {'type': 'ESTP', 'name': 'Entrepreneur', 'image': 'assets/ESTP_Entrepreneur.jpg'},
+    {'type': 'INFJ', 'name': 'Advocate', 'image': 'assets/INFJ_Advocate.jpg'},
+    {'type': 'INFP', 'name': 'Mediator', 'image': 'assets/INFP_Mediator.jpg'},
+    {'type': 'INTJ', 'name': 'Architect', 'image': 'assets/INTJ_Architect.jpg'},
+    {'type': 'INTP', 'name': 'Thinker', 'image': 'assets/INTP_Thinker.jpg'},
+    {'type': 'ISFJ', 'name': 'Protector', 'image': 'assets/ISFJ_Protector.jpg'},
+    {'type': 'ISFP', 'name': 'Adventurer', 'image': 'assets/ISFP_Adventurer.jpg'},
+    {'type': 'ISTJ', 'name': 'Logistician', 'image': 'assets/ISTJ_Logistician.jpg'},
+    {'type': 'ISTP', 'name': 'Virtuoso', 'image': 'assets/ISTP_Virtuoso.jpg'},
+  ];
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
+        title: const Text('MBTI Personality Types'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        centerTitle: true,
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 0.85,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+          ),
+          itemCount: mbtiTypes.length,
+          itemBuilder: (context, index) {
+            final mbtiType = mbtiTypes[index];
+            return Card(
+              elevation: 4,
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                onTap: () {
+                  _showMBTIDetail(context, mbtiType);
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Image.asset(
+                        mbtiType['image']!,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: Colors.grey[300],
+                            child: const Icon(
+                              Icons.person,
+                              size: 50,
+                              color: Colors.grey,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              mbtiType['type']!,
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              mbtiType['name']!,
+                              style: Theme.of(context).textTheme.bodySmall,
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  void _showMBTIDetail(BuildContext context, Map<String, String> mbtiType) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('${mbtiType['type']} - ${mbtiType['name']}'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  mbtiType['image']!,
+                  height: 200,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      height: 200,
+                      color: Colors.grey[300],
+                      child: const Icon(
+                        Icons.person,
+                        size: 80,
+                        color: Colors.grey,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                '${mbtiType['type']} personality type, also known as "${mbtiType['name']}"',
+                style: Theme.of(context).textTheme.bodyMedium,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Close'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
