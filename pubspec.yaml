@@ -99,5 +99,11 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+  # Custom fonts
+  fonts:
+    - family: Pretendard
+      fonts:
+        - asset: font/PretendardVariable.ttf
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
