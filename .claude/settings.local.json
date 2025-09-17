@@ -8,7 +8,9 @@
       "Bash(mv:*)",
       "mcp__ide__getDiagnostics",
       "Bash(flutter test:*)",
-      "Bash(flutter analyze:*)"
+      "Bash(flutter analyze:*)",
+      "WebFetch(domain:www.figma.com)",
+      "WebFetch(domain:carbondesignsystem.com)"
     ],
     "deny": [],
     "ask": []
