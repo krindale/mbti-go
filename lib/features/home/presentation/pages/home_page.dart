@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -23,6 +24,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
   late AnimationController _headerAnimationController;
   late Animation<double> _headerFadeAnimation;
   late Animation<Offset> _headerSlideAnimation;
+  Timer? _animationTimer;
 
   @override
   void initState() {
@@ -54,7 +56,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
   }
 
   void _startAnimations() {
-    Future.delayed(const Duration(milliseconds: 300), () {
+    _animationTimer = Timer(const Duration(milliseconds: 300), () {
       if (mounted) {
         _headerAnimationController.forward();
       }
@@ -63,6 +65,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
 
   @override
   void dispose() {
+    _animationTimer?.cancel();
     _headerAnimationController.dispose();
     super.dispose();
   }

@@ -56,7 +56,7 @@ void main() {
       expect(analysts.length, 4);
       expect(analysts.map((type) => type.code).toSet(),
              {'INTJ', 'INTP', 'ENTJ', 'ENTP'});
-      expect(analysts.every((type) => type.category == 'Analysts'), true);
+      expect(analysts.every((type) => type.category == 'NT'), true);
     });
 
     test('getDiplomats가 4개의 Diplomats 타입을 반환하는지 확인', () {
@@ -65,7 +65,7 @@ void main() {
       expect(diplomats.length, 4);
       expect(diplomats.map((type) => type.code).toSet(),
              {'INFJ', 'INFP', 'ENFJ', 'ENFP'});
-      expect(diplomats.every((type) => type.category == 'Diplomats'), true);
+      expect(diplomats.every((type) => type.category == 'NF'), true);
     });
 
     test('getSentinels가 4개의 Sentinels 타입을 반환하는지 확인', () {
@@ -74,7 +74,7 @@ void main() {
       expect(sentinels.length, 4);
       expect(sentinels.map((type) => type.code).toSet(),
              {'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ'});
-      expect(sentinels.every((type) => type.category == 'Sentinels'), true);
+      expect(sentinels.every((type) => type.category == 'SJ'), true);
     });
 
     test('getExplorers가 4개의 Explorers 타입을 반환하는지 확인', () {
@@ -83,7 +83,7 @@ void main() {
       expect(explorers.length, 4);
       expect(explorers.map((type) => type.code).toSet(),
              {'ISTP', 'ISFP', 'ESTP', 'ESFP'});
-      expect(explorers.every((type) => type.category == 'Explorers'), true);
+      expect(explorers.every((type) => type.category == 'SP'), true);
     });
 
     test('getQuestions가 20개의 질문을 반환하는지 확인', () {
@@ -157,28 +157,28 @@ void main() {
       }
 
       // Analysts (NT)
-      expect(codeToCategory['INTJ'], 'Analysts');
-      expect(codeToCategory['INTP'], 'Analysts');
-      expect(codeToCategory['ENTJ'], 'Analysts');
-      expect(codeToCategory['ENTP'], 'Analysts');
+      expect(codeToCategory['INTJ'], 'NT');
+      expect(codeToCategory['INTP'], 'NT');
+      expect(codeToCategory['ENTJ'], 'NT');
+      expect(codeToCategory['ENTP'], 'NT');
 
       // Diplomats (NF)
-      expect(codeToCategory['INFJ'], 'Diplomats');
-      expect(codeToCategory['INFP'], 'Diplomats');
-      expect(codeToCategory['ENFJ'], 'Diplomats');
-      expect(codeToCategory['ENFP'], 'Diplomats');
+      expect(codeToCategory['INFJ'], 'NF');
+      expect(codeToCategory['INFP'], 'NF');
+      expect(codeToCategory['ENFJ'], 'NF');
+      expect(codeToCategory['ENFP'], 'NF');
 
       // Sentinels (SJ)
-      expect(codeToCategory['ISTJ'], 'Sentinels');
-      expect(codeToCategory['ISFJ'], 'Sentinels');
-      expect(codeToCategory['ESTJ'], 'Sentinels');
-      expect(codeToCategory['ESFJ'], 'Sentinels');
+      expect(codeToCategory['ISTJ'], 'SJ');
+      expect(codeToCategory['ISFJ'], 'SJ');
+      expect(codeToCategory['ESTJ'], 'SJ');
+      expect(codeToCategory['ESFJ'], 'SJ');
 
       // Explorers (SP)
-      expect(codeToCategory['ISTP'], 'Explorers');
-      expect(codeToCategory['ISFP'], 'Explorers');
-      expect(codeToCategory['ESTP'], 'Explorers');
-      expect(codeToCategory['ESFP'], 'Explorers');
+      expect(codeToCategory['ISTP'], 'SP');
+      expect(codeToCategory['ISFP'], 'SP');
+      expect(codeToCategory['ESTP'], 'SP');
+      expect(codeToCategory['ESFP'], 'SP');
     });
 
     test('질문 데이터가 올바른 구조를 가지고 있는지 확인', () {

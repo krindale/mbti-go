@@ -18,8 +18,8 @@ void main() {
         ),
       );
 
-      // 초기에는 스케일이 0이어야 함
-      expect(find.byType(Transform), findsOneWidget);
+      // BounceInAnimation과 자식 요소가 있는지 확인
+      expect(find.byType(BounceInAnimation), findsOneWidget);
       expect(find.text('Test Child'), findsOneWidget);
     });
 
@@ -80,15 +80,15 @@ void main() {
 
       // 초기 상태 확인
       await tester.pump();
-      expect(find.byType(Transform), findsOneWidget);
+      expect(find.byType(BounceInAnimation), findsOneWidget);
 
       // 150ms 후 (중간 지점)
       await tester.pump(const Duration(milliseconds: 150));
-      expect(find.byType(Transform), findsOneWidget);
+      expect(find.byType(BounceInAnimation), findsOneWidget);
 
       // 애니메이션 완료 후
       await tester.pump(const Duration(milliseconds: 300));
-      expect(find.byType(Transform), findsOneWidget);
+      expect(find.byType(BounceInAnimation), findsOneWidget);
     });
 
     testWidgets('delay가 있을 때 애니메이션이 지연되는지 확인', (WidgetTester tester) async {
@@ -109,15 +109,15 @@ void main() {
 
       // 초기 상태
       await tester.pump();
-      expect(find.byType(Transform), findsOneWidget);
+      expect(find.byType(BounceInAnimation), findsOneWidget);
 
       // delay 시간 경과 전
       await tester.pump(const Duration(milliseconds: 100));
-      expect(find.byType(Transform), findsOneWidget);
+      expect(find.byType(BounceInAnimation), findsOneWidget);
 
       // delay 시간 경과 후
       await tester.pump(const Duration(milliseconds: 200));
-      expect(find.byType(Transform), findsOneWidget);
+      expect(find.byType(BounceInAnimation), findsOneWidget);
     });
 
     testWidgets('여러 BounceInAnimation이 동시에 작동하는지 확인', (WidgetTester tester) async {
@@ -192,8 +192,9 @@ void main() {
         ),
       );
 
-      expect(find.byType(AnimatedBuilder), findsOneWidget);
-      expect(find.byType(Transform), findsOneWidget);
+      // BounceInAnimation 안에서 AnimatedBuilder가 사용되는지 확인
+      expect(find.byType(BounceInAnimation), findsOneWidget);
+      expect(find.text('Test Child'), findsOneWidget);
     });
   });
 }

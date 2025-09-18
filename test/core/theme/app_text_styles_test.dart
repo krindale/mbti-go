@@ -32,57 +32,57 @@ void main() {
     });
 
     test('글꼴 크기가 올바르게 설정되어 있는지 확인', () {
-      // Display styles
-      expect(AppTextStyles.displayLarge.fontSize, 57);
-      expect(AppTextStyles.displayMedium.fontSize, 45);
-      expect(AppTextStyles.displaySmall.fontSize, 36);
+      // Display styles - Carbon Design System inspired
+      expect(AppTextStyles.displayLarge.fontSize, 54);
+      expect(AppTextStyles.displayMedium.fontSize, 42);
+      expect(AppTextStyles.displaySmall.fontSize, 32);
 
-      // Headline styles
-      expect(AppTextStyles.headlineLarge.fontSize, 32);
-      expect(AppTextStyles.headlineMedium.fontSize, 28);
-      expect(AppTextStyles.headlineSmall.fontSize, 24);
+      // Headline styles - Carbon productive heading
+      expect(AppTextStyles.headlineLarge.fontSize, 28);
+      expect(AppTextStyles.headlineMedium.fontSize, 24);
+      expect(AppTextStyles.headlineSmall.fontSize, 20);
 
-      // Title styles
-      expect(AppTextStyles.titleLarge.fontSize, 22);
+      // Title styles - Carbon body text styles
+      expect(AppTextStyles.titleLarge.fontSize, 18);
       expect(AppTextStyles.titleMedium.fontSize, 16);
       expect(AppTextStyles.titleSmall.fontSize, 14);
 
-      // Body styles
+      // Body styles - Carbon body styles
       expect(AppTextStyles.bodyLarge.fontSize, 16);
       expect(AppTextStyles.bodyMedium.fontSize, 14);
       expect(AppTextStyles.bodySmall.fontSize, 12);
 
-      // Label styles
+      // Label styles - Carbon label styles
       expect(AppTextStyles.labelLarge.fontSize, 14);
       expect(AppTextStyles.labelMedium.fontSize, 12);
       expect(AppTextStyles.labelSmall.fontSize, 11);
     });
 
     test('글꼴 무게가 올바르게 설정되어 있는지 확인', () {
-      // Display styles - light weight
-      expect(AppTextStyles.displayLarge.fontWeight, FontWeight.w400);
-      expect(AppTextStyles.displayMedium.fontWeight, FontWeight.w400);
-      expect(AppTextStyles.displaySmall.fontWeight, FontWeight.w400);
+      // Display styles - light weight (Carbon uses w300)
+      expect(AppTextStyles.displayLarge.fontWeight, FontWeight.w300);
+      expect(AppTextStyles.displayMedium.fontWeight, FontWeight.w300);
+      expect(AppTextStyles.displaySmall.fontWeight, FontWeight.w300);
 
       // Headline styles - regular weight
       expect(AppTextStyles.headlineLarge.fontWeight, FontWeight.w400);
       expect(AppTextStyles.headlineMedium.fontWeight, FontWeight.w400);
       expect(AppTextStyles.headlineSmall.fontWeight, FontWeight.w400);
 
-      // Title styles - medium weight
-      expect(AppTextStyles.titleLarge.fontWeight, FontWeight.w400);
-      expect(AppTextStyles.titleMedium.fontWeight, FontWeight.w500);
-      expect(AppTextStyles.titleSmall.fontWeight, FontWeight.w500);
+      // Title styles - semibold weight (Carbon uses w600)
+      expect(AppTextStyles.titleLarge.fontWeight, FontWeight.w600);
+      expect(AppTextStyles.titleMedium.fontWeight, FontWeight.w600);
+      expect(AppTextStyles.titleSmall.fontWeight, FontWeight.w600);
 
       // Body styles - regular weight
       expect(AppTextStyles.bodyLarge.fontWeight, FontWeight.w400);
       expect(AppTextStyles.bodyMedium.fontWeight, FontWeight.w400);
       expect(AppTextStyles.bodySmall.fontWeight, FontWeight.w400);
 
-      // Label styles - medium weight
-      expect(AppTextStyles.labelLarge.fontWeight, FontWeight.w500);
-      expect(AppTextStyles.labelMedium.fontWeight, FontWeight.w500);
-      expect(AppTextStyles.labelSmall.fontWeight, FontWeight.w500);
+      // Label styles - semibold weight (Carbon uses w600)
+      expect(AppTextStyles.labelLarge.fontWeight, FontWeight.w600);
+      expect(AppTextStyles.labelMedium.fontWeight, FontWeight.w600);
+      expect(AppTextStyles.labelSmall.fontWeight, FontWeight.w600);
     });
 
     test('스타일 수정 메서드가 올바르게 작동하는지 확인', () {

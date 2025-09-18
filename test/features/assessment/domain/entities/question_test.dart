@@ -171,10 +171,10 @@ void main() {
         value: 4,
       );
 
-      // Dart의 기본 동등성 비교
-      expect(option1 == option2, false); // 다른 인스턴스
-      expect(option1 == option3, false);
-      expect(identical(option1, option1), true);
+      // Equatable을 사용한 값 기반 동등성 비교
+      expect(option1 == option2, true); // 같은 내용
+      expect(option1 == option3, false); // 다른 내용
+      expect(identical(option1, option1), true); // 같은 참조
     });
 
     test('QuestionOption 불변성 확인 (immutable)', () {

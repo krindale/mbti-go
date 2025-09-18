@@ -66,6 +66,8 @@ class AppColors {
 
   // MBTI Type Color Map
   static Color getMBTIColor(String type) {
+    if (type.length < 2) return primary;
+
     switch (type.substring(0, 2)) {
       case 'NT':
         return analysts;

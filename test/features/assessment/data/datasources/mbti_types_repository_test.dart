@@ -49,7 +49,7 @@ void main() {
       expect(analysts.length, 4);
       expect(analysts.map((type) => type.code).toSet(),
              {'INTJ', 'INTP', 'ENTJ', 'ENTP'});
-      expect(analysts.every((type) => type.category == 'Analysts'), true);
+      expect(analysts.every((type) => type.category == 'NT'), true);
     });
 
     test('getDiplomats가 4개의 Diplomats 타입을 반환하는지 확인', () {
@@ -58,7 +58,7 @@ void main() {
       expect(diplomats.length, 4);
       expect(diplomats.map((type) => type.code).toSet(),
              {'INFJ', 'INFP', 'ENFJ', 'ENFP'});
-      expect(diplomats.every((type) => type.category == 'Diplomats'), true);
+      expect(diplomats.every((type) => type.category == 'NF'), true);
     });
 
     test('getSentinels가 4개의 Sentinels 타입을 반환하는지 확인', () {
@@ -67,7 +67,7 @@ void main() {
       expect(sentinels.length, 4);
       expect(sentinels.map((type) => type.code).toSet(),
              {'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ'});
-      expect(sentinels.every((type) => type.category == 'Sentinels'), true);
+      expect(sentinels.every((type) => type.category == 'SJ'), true);
     });
 
     test('getExplorers가 4개의 Explorers 타입을 반환하는지 확인', () {
@@ -76,7 +76,7 @@ void main() {
       expect(explorers.length, 4);
       expect(explorers.map((type) => type.code).toSet(),
              {'ISTP', 'ISFP', 'ESTP', 'ESFP'});
-      expect(explorers.every((type) => type.category == 'Explorers'), true);
+      expect(explorers.every((type) => type.category == 'SP'), true);
     });
 
     test('각 MBTI 타입이 올바른 구조를 가지고 있는지 확인', () {
@@ -88,28 +88,31 @@ void main() {
         expect(type.name.isNotEmpty, true);
         expect(type.category.isNotEmpty, true);
         expect(type.description.isNotEmpty, true);
-        expect(type.image.isNotEmpty, true);
+        expect(type.imagePath.isNotEmpty, true);
 
         // 리스트들이 비어있지 않은지 확인
         expect(type.strengths.isNotEmpty, true);
         expect(type.weaknesses.isNotEmpty, true);
-        expect(type.compatibility.isNotEmpty, true);
+        expect(type.detailedDescription.isNotEmpty, true);
         expect(type.careers.isNotEmpty, true);
 
         // 이미지 경로 형식 확인
-        expect(type.image.startsWith('assets/'), true);
-        expect(type.image.endsWith('.jpg'), true);
+        expect(type.imagePath.startsWith('assets/'), true);
+        expect(type.imagePath.endsWith('.jpg'), true);
       }
     });
 
-    test('MBTI 타입별 호환성 정보가 유효한 타입 코드인지 확인', () {
+    test('MBTI 타입별 인지 기능이 올바르게 설정되어 있는지 확인', () {
       final types = MBTITypesRepository.getAllTypes();
-      final allCodes = types.map((type) => type.code).toSet();
 
       for (final type in types) {
-        for (final compatibleType in type.compatibility) {
-          expect(allCodes.contains(compatibleType), true,
-                 reason: '${type.code}의 호환성에 있는 $compatibleType는 유효한 MBTI 타입이 아닙니다.');
+        // 모든 타입은 4개의 인지 기능을 가져야 함
+        expect(type.cognitiveFunctions.length, 4,
+               reason: '${type.code}는 4개의 인지 기능을 가져야 합니다.');
+
+        // 인지 기능들이 비어있지 않은지 확인
+        for (final function in type.cognitiveFunctions) {
+          expect(function.isNotEmpty, true);
         }
       }
     });
@@ -156,13 +159,13 @@ void main() {
       final intj = types.firstWhere((type) => type.code == 'INTJ');
 
       expect(intj.name, '건축가');
-      expect(intj.category, 'Analysts');
+      expect(intj.category, 'NT');
       expect(intj.description.contains('전략적'), true);
       expect(intj.strengths.isNotEmpty, true);
       expect(intj.weaknesses.isNotEmpty, true);
-      expect(intj.compatibility.isNotEmpty, true);
+      expect(intj.detailedDescription.isNotEmpty, true);
       expect(intj.careers.isNotEmpty, true);
-      expect(intj.image, 'assets/INTJ_Architect.jpg');
+      expect(intj.imagePath, 'assets/INTJ_Architect.jpg');
     });
 
     test('특정 MBTI 타입 상세 정보 확인 (ENFP)', () {
@@ -170,27 +173,27 @@ void main() {
       final enfp = types.firstWhere((type) => type.code == 'ENFP');
 
       expect(enfp.name, '활동가');
-      expect(enfp.category, 'Diplomats');
+      expect(enfp.category, 'NF');
       expect(enfp.description.contains('열정적'), true);
       expect(enfp.strengths.isNotEmpty, true);
       expect(enfp.weaknesses.isNotEmpty, true);
-      expect(enfp.compatibility.isNotEmpty, true);
+      expect(enfp.detailedDescription.isNotEmpty, true);
       expect(enfp.careers.isNotEmpty, true);
-      expect(enfp.image, 'assets/ENFP_Campaigner.jpg');
+      expect(enfp.imagePath, 'assets/ENFP_Campaigner.jpg');
     });
 
     test('모든 MBTI 타입의 이미지 경로가 일관된 형식인지 확인', () {
       final types = MBTITypesRepository.getAllTypes();
 
       for (final type in types) {
-        expect(type.image, startsWith('assets/'));
-        expect(type.image, contains(type.code));
-        expect(type.image, endsWith('.jpg'));
+        expect(type.imagePath, startsWith('assets/'));
+        expect(type.imagePath, contains(type.code));
+        expect(type.imagePath, endsWith('.jpg'));
 
         // 파일명이 "MBTI코드_영어이름.jpg" 형식인지 확인
         final expectedPattern = RegExp(r'^assets/[A-Z]{4}_[A-Za-z]+\.jpg$');
-        expect(expectedPattern.hasMatch(type.image), true,
-               reason: '${type.code}의 이미지 경로 형식이 올바르지 않습니다: ${type.image}');
+        expect(expectedPattern.hasMatch(type.imagePath), true,
+               reason: '${type.code}의 이미지 경로 형식이 올바르지 않습니다: ${type.imagePath}');
       }
     });
   });

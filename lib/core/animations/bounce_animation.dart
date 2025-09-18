@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'animation_constants.dart';
 
@@ -25,6 +26,7 @@ class _BounceInAnimationState extends State<BounceInAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
+  Timer? _delayTimer;
 
   @override
   void initState() {
@@ -37,7 +39,7 @@ class _BounceInAnimationState extends State<BounceInAnimation>
     ).animate(CurvedAnimation(parent: _controller, curve: widget.curve));
 
     // Delay then start animation
-    Future.delayed(widget.delay, () {
+    _delayTimer = Timer(widget.delay, () {
       if (mounted) {
         _controller.forward();
       }
@@ -46,6 +48,7 @@ class _BounceInAnimationState extends State<BounceInAnimation>
 
   @override
   void dispose() {
+    _delayTimer?.cancel();
     _controller.dispose();
     super.dispose();
   }
