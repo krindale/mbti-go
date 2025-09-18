@@ -11,6 +11,7 @@ class MBTIType extends Equatable {
   final List<String> careers;
   final String imagePath;
   final Color primaryColor;
+  final String detailedDescription;
 
   const MBTIType({
     required this.code,
@@ -22,32 +23,34 @@ class MBTIType extends Equatable {
     required this.careers,
     required this.imagePath,
     required this.primaryColor,
+    required this.detailedDescription,
   });
 
   @override
   List<Object?> get props => [
-        code,
-        name,
-        category,
-        description,
-        strengths,
-        weaknesses,
-        careers,
-        imagePath,
-        primaryColor,
-      ];
+    code,
+    name,
+    category,
+    description,
+    strengths,
+    weaknesses,
+    careers,
+    imagePath,
+    primaryColor,
+    detailedDescription,
+  ];
 
   // Helper method to get category full name
   String get categoryName {
     switch (category) {
       case 'NT':
-        return 'Analysts';
+        return '합리주의자';
       case 'NF':
-        return 'Diplomats';
+        return '이상주의자';
       case 'SJ':
-        return 'Sentinels';
+        return '수호자';
       case 'SP':
-        return 'Explorers';
+        return '예술가';
       default:
         return category;
     }

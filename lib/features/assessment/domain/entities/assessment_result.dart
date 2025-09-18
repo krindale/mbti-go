@@ -22,13 +22,13 @@ class AssessmentResult extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        type,
-        scores,
-        completedAt,
-        testType,
-        reliability,
-      ];
+    id,
+    type,
+    scores,
+    completedAt,
+    testType,
+    reliability,
+  ];
 
   // Helper methods to get individual dimension scores
   double get extraversionScore => scores['E'] ?? 0.0;
@@ -41,7 +41,8 @@ class AssessmentResult extends Equatable {
   double get perceivingScore => scores['P'] ?? 0.0;
 
   // Helper method to get dominant preference for each dimension
-  String get extraversionPreference => extraversionScore > introversionScore ? 'E' : 'I';
+  String get extraversionPreference =>
+      extraversionScore > introversionScore ? 'E' : 'I';
   String get sensingPreference => sensingScore > intuitionScore ? 'S' : 'N';
   String get thinkingPreference => thinkingScore > feelingScore ? 'T' : 'F';
   String get judgingPreference => judgingScore > perceivingScore ? 'J' : 'P';

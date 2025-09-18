@@ -10,7 +10,8 @@
       "Bash(flutter test:*)",
       "Bash(flutter analyze:*)",
       "WebFetch(domain:www.figma.com)",
-      "WebFetch(domain:carbondesignsystem.com)"
+      "WebFetch(domain:carbondesignsystem.com)",
+      "Bash(flutter build:*)"
     ],
     "deny": [],
     "ask": []
