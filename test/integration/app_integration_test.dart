@@ -10,7 +10,8 @@ void main() {
     testWidgets('앱이 정상적으로 시작되고 홈페이지가 표시되는지 확인', (WidgetTester tester) async {
       // 앱 시작
       app.main();
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 3)); // 애니메이션 진행
 
       // MaterialApp이 존재하는지 확인
       expect(find.byType(MaterialApp), findsOneWidget);
@@ -24,7 +25,8 @@ void main() {
 
     testWidgets('홈페이지의 모든 주요 컴포넌트가 렌더링되는지 확인', (WidgetTester tester) async {
       app.main();
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 3)); // 애니메이션 진행
 
       // 앱 제목 확인
       expect(find.text('MBTI Go'), findsOneWidget);
@@ -62,7 +64,8 @@ void main() {
 
     testWidgets('홈페이지에서 MBTI 타입 카드 스크롤 기능 확인', (WidgetTester tester) async {
       app.main();
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 3)); // 애니메이션 진행
 
       // GridView 찾기
       final gridView = find.byType(GridView);
@@ -81,7 +84,8 @@ void main() {
 
     testWidgets('MBTI 타입 카드 탭 상호작용 확인', (WidgetTester tester) async {
       app.main();
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 3)); // 애니메이션 진행
 
       // 첫 번째 MBTI 카드 탭
       final firstCard = find.byType(MBTITypeCard).first;
@@ -95,7 +99,8 @@ void main() {
 
     testWidgets('검사 시작 버튼 탭 상호작용 확인', (WidgetTester tester) async {
       app.main();
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 3)); // 애니메이션 진행
 
       // 검사 시작 버튼 탭
       final startButton = find.text('MBTI 검사 시작하기');
@@ -111,7 +116,8 @@ void main() {
       // 작은 화면 (모바일)
       await tester.binding.setSurfaceSize(const Size(360, 640));
       app.main();
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 3)); // 애니메이션 진행
 
       expect(find.text('MBTI Go'), findsOneWidget);
       expect(find.byType(MBTITypeCard), findsAtLeastNWidgets(2)); // GridView 지연 로딩 고려
@@ -119,7 +125,8 @@ void main() {
       // 중간 화면 (태블릿)
       await tester.binding.setSurfaceSize(const Size(768, 1024));
       app.main();
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 3)); // 애니메이션 진행
 
       expect(find.text('MBTI Go'), findsOneWidget);
       expect(find.byType(MBTITypeCard), findsAtLeastNWidgets(2)); // GridView 지연 로딩 고려
@@ -127,7 +134,8 @@ void main() {
       // 큰 화면 (데스크톱)
       await tester.binding.setSurfaceSize(const Size(1200, 800));
       app.main();
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 3)); // 애니메이션 진행
 
       expect(find.text('MBTI Go'), findsOneWidget);
       expect(find.byType(MBTITypeCard), findsAtLeastNWidgets(2)); // GridView 지연 로딩 고려
@@ -137,7 +145,8 @@ void main() {
 
     testWidgets('메모리 누수 없이 앱이 정상적으로 dispose되는지 확인', (WidgetTester tester) async {
       app.main();
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 3)); // 애니메이션 진행
 
       // 정상적으로 앱이 실행되는지 확인
       expect(find.byType(MaterialApp), findsOneWidget);
@@ -159,7 +168,8 @@ void main() {
 
     testWidgets('앱 테마가 올바르게 적용되어 있는지 확인', (WidgetTester tester) async {
       app.main();
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 3)); // 애니메이션 진행
 
       final materialApp = tester.widget<MaterialApp>(find.byType(MaterialApp));
 
@@ -183,7 +193,8 @@ void main() {
       // 앱 시작 시간 측정
       stopwatch.start();
       app.main();
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 3)); // 애니메이션 진행
       stopwatch.stop();
 
       // 앱 시작 시간이 합리적인 범위 내에 있는지 확인 (3초 이하)
@@ -205,7 +216,8 @@ void main() {
 
     testWidgets('앱이 다양한 상황에서 안정적으로 작동하는지 확인', (WidgetTester tester) async {
       app.main();
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 3)); // 애니메이션 진행
 
       // 빠른 연속 탭 테스트 (warnIfMissed: false로 경고 무시)
       final startButton = find.text('MBTI 검사 시작하기');
@@ -232,7 +244,8 @@ void main() {
 
     testWidgets('접근성 기능이 올바르게 작동하는지 확인', (WidgetTester tester) async {
       app.main();
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 3)); // 애니메이션 진행
 
       // 주요 UI 요소들이 접근 가능한지 확인
       expect(find.text('MBTI Go'), findsOneWidget);

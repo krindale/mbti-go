@@ -8,18 +8,20 @@ void main() {
   group('MBTITypeCard 위젯 테스트', () {
     const testMBTIType = MBTIType(
       code: 'INTJ',
-      name: '건축가',
+      name: '전략가',
       category: 'Analysts',
       description: '상상력이 풍부하고 전략적인 사고를 하는 완벽주의자',
       detailedDescription: '자세한 설명',
       strengths: ['전략적 사고', '독립성', '결단력'],
       weaknesses: ['감정 표현 부족', '완벽주의', '타인 의견 무시'],
-      careers: ['과학자', '엔지니어', '건축가'],
+      careers: ['과학자', '엔지니어', '전략가'],
       imagePath: 'assets/INTJ_Architect.jpg',
       primaryColor: Color(0xFF6366F1),
     );
 
-    testWidgets('MBTITypeCard가 기본 정보를 올바르게 표시하는지 확인', (WidgetTester tester) async {
+    testWidgets('MBTITypeCard가 기본 정보를 올바르게 표시하는지 확인', (
+      WidgetTester tester,
+    ) async {
       bool tapCalled = false;
 
       await tester.pumpWidget(
@@ -40,7 +42,7 @@ void main() {
       expect(find.text('INTJ'), findsOneWidget);
 
       // MBTI 타입 이름 확인
-      expect(find.text('건축가'), findsOneWidget);
+      expect(find.text('전략가'), findsOneWidget);
 
       // MBTI 설명 확인
       expect(find.text('상상력이 풍부하고 전략적인 사고를 하는 완벽주의자'), findsOneWidget);
@@ -51,15 +53,13 @@ void main() {
       expect(tapCalled, true);
     });
 
-    testWidgets('MBTITypeCard의 Hero 애니메이션 태그가 올바른지 확인', (WidgetTester tester) async {
+    testWidgets('MBTITypeCard의 Hero 애니메이션 태그가 올바른지 확인', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: MBTITypeCard(
-              mbtiType: testMBTIType,
-              index: 5,
-              onTap: () {},
-            ),
+            body: MBTITypeCard(mbtiType: testMBTIType, index: 5, onTap: () {}),
           ),
         ),
       );
@@ -74,15 +74,13 @@ void main() {
       expect(hero.tag, AnimationConstants.heroTag('INTJ', 5));
     });
 
-    testWidgets('MBTITypeCard의 색상이 타입에 맞게 적용되는지 확인', (WidgetTester tester) async {
+    testWidgets('MBTITypeCard의 색상이 타입에 맞게 적용되는지 확인', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: MBTITypeCard(
-              mbtiType: testMBTIType,
-              index: 0,
-              onTap: () {},
-            ),
+            body: MBTITypeCard(mbtiType: testMBTIType, index: 0, onTap: () {}),
           ),
         ),
       );
@@ -93,16 +91,18 @@ void main() {
       expect(find.byType(Container), findsWidgets);
     });
 
-    testWidgets('여러 타입의 MBTITypeCard가 다르게 표시되는지 확인', (WidgetTester tester) async {
+    testWidgets('여러 타입의 MBTITypeCard가 다르게 표시되는지 확인', (
+      WidgetTester tester,
+    ) async {
       const intjType = MBTIType(
         code: 'INTJ',
-        name: '건축가',
+        name: '전략가',
         category: 'Analysts',
         description: '상상력이 풍부하고 전략적인 사고를 하는 완벽주의자',
         detailedDescription: '자세한 설명',
         strengths: ['전략적 사고', '독립성', '결단력'],
         weaknesses: ['감정 표현 부족', '완벽주의', '타인 의견 무시'],
-        careers: ['과학자', '엔지니어', '건축가'],
+        careers: ['과학자', '엔지니어', '전략가'],
         imagePath: 'assets/INTJ_Architect.jpg',
         primaryColor: Color(0xFF6366F1),
       );
@@ -123,19 +123,14 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: Column(
-              children: [
-                MBTITypeCard(
-                  mbtiType: intjType,
-                  index: 0,
-                  onTap: () {},
-                ),
-                MBTITypeCard(
-                  mbtiType: enfpType,
-                  index: 1,
-                  onTap: () {},
-                ),
-              ],
+            body: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  MBTITypeCard(mbtiType: intjType, index: 0, onTap: () {}),
+                  MBTITypeCard(mbtiType: enfpType, index: 1, onTap: () {}),
+                ],
+              ),
             ),
           ),
         ),
@@ -148,14 +143,16 @@ void main() {
       expect(find.text('ENFP'), findsOneWidget);
 
       // 두 카드의 다른 이름이 표시되는지 확인
-      expect(find.text('건축가'), findsOneWidget);
+      expect(find.text('전략가'), findsOneWidget);
       expect(find.text('활동가'), findsOneWidget);
     });
 
-    testWidgets('MBTITypeCard의 애니메이션이 올바르게 작동하는지 확인', (WidgetTester tester) async {
+    testWidgets('MBTITypeCard의 애니메이션이 올바르게 작동하는지 확인', (
+      WidgetTester tester,
+    ) async {
       const entpType = MBTIType(
         code: 'ENTP',
-        name: '토론가',
+        name: '혁신가',
         category: 'Analysts',
         description: '똑똑하고 호기심이 많은 사색가',
         detailedDescription: '자세한 설명',
@@ -169,11 +166,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: MBTITypeCard(
-              mbtiType: entpType,
-              index: 2,
-              onTap: () {},
-            ),
+            body: MBTITypeCard(mbtiType: entpType, index: 2, onTap: () {}),
           ),
         ),
       );
@@ -188,7 +181,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('ENTP'), findsOneWidget);
-      expect(find.text('토론가'), findsOneWidget);
+      expect(find.text('혁신가'), findsOneWidget);
     });
 
     testWidgets('MBTITypeCard의 반응형 레이아웃이 올바른지 확인', (WidgetTester tester) async {
@@ -198,11 +191,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: MBTITypeCard(
-              mbtiType: testMBTIType,
-              index: 0,
-              onTap: () {},
-            ),
+            body: MBTITypeCard(mbtiType: testMBTIType, index: 0, onTap: () {}),
           ),
         ),
       );
@@ -210,7 +199,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('INTJ'), findsOneWidget);
-      expect(find.text('건축가'), findsOneWidget);
+      expect(find.text('전략가'), findsOneWidget);
 
       // 큰 화면 크기에서 테스트
       await tester.binding.setSurfaceSize(const Size(800, 600));
@@ -218,11 +207,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: MBTITypeCard(
-              mbtiType: testMBTIType,
-              index: 0,
-              onTap: () {},
-            ),
+            body: MBTITypeCard(mbtiType: testMBTIType, index: 0, onTap: () {}),
           ),
         ),
       );
@@ -230,12 +215,14 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('INTJ'), findsOneWidget);
-      expect(find.text('건축가'), findsOneWidget);
+      expect(find.text('전략가'), findsOneWidget);
 
       addTearDown(() => tester.binding.setSurfaceSize(null));
     });
 
-    testWidgets('MBTITypeCard의 터치 영역이 전체 카드를 포함하는지 확인', (WidgetTester tester) async {
+    testWidgets('MBTITypeCard의 터치 영역이 전체 카드를 포함하는지 확인', (
+      WidgetTester tester,
+    ) async {
       bool tapCalled = false;
 
       await tester.pumpWidget(
@@ -265,16 +252,14 @@ void main() {
       expect(tapCalled, true);
     });
 
-    testWidgets('MBTITypeCard가 null safety를 준수하는지 확인', (WidgetTester tester) async {
+    testWidgets('MBTITypeCard가 null safety를 준수하는지 확인', (
+      WidgetTester tester,
+    ) async {
       // 정상적인 MBTIType 객체로 테스트
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: MBTITypeCard(
-              mbtiType: testMBTIType,
-              index: 0,
-              onTap: () {},
-            ),
+            body: MBTITypeCard(mbtiType: testMBTIType, index: 0, onTap: () {}),
           ),
         ),
       );
@@ -286,13 +271,16 @@ void main() {
       expect(find.byType(MBTITypeCard), findsOneWidget);
     });
 
-    testWidgets('MBTITypeCard의 텍스트가 오버플로우되지 않는지 확인', (WidgetTester tester) async {
+    testWidgets('MBTITypeCard의 텍스트가 오버플로우되지 않는지 확인', (
+      WidgetTester tester,
+    ) async {
       // 긴 설명을 가진 MBTIType 생성
       const longDescriptionType = MBTIType(
         code: 'INTJ',
-        name: '매우 긴 이름을 가진 건축가 타입',
+        name: '매우 긴 이름을 가진 전략가 타입',
         category: 'Analysts',
-        description: '매우 매우 매우 긴 설명을 가진 상상력이 풍부하고 전략적인 사고를 하는 완벽주의자 타입입니다. 이 설명은 의도적으로 길게 작성되었습니다.',
+        description:
+            '매우 매우 매우 긴 설명을 가진 상상력이 풍부하고 전략적인 사고를 하는 완벽주의자 타입입니다. 이 설명은 의도적으로 길게 작성되었습니다.',
         detailedDescription: '매우 상세한 설명',
         strengths: ['전략적 사고'],
         weaknesses: ['완벽주의'],
@@ -323,16 +311,14 @@ void main() {
       expect(find.byType(MBTITypeCard), findsOneWidget);
     });
 
-    testWidgets('다크 모드에서 MBTITypeCard가 올바르게 표시되는지 확인', (WidgetTester tester) async {
+    testWidgets('다크 모드에서 MBTITypeCard가 올바르게 표시되는지 확인', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           theme: ThemeData.dark(),
           home: Scaffold(
-            body: MBTITypeCard(
-              mbtiType: testMBTIType,
-              index: 0,
-              onTap: () {},
-            ),
+            body: MBTITypeCard(mbtiType: testMBTIType, index: 0, onTap: () {}),
           ),
         ),
       );
@@ -340,19 +326,17 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('INTJ'), findsOneWidget);
-      expect(find.text('건축가'), findsOneWidget);
+      expect(find.text('전략가'), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('MBTITypeCard가 접근성 가이드라인을 준수하는지 확인', (WidgetTester tester) async {
+    testWidgets('MBTITypeCard가 접근성 가이드라인을 준수하는지 확인', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: MBTITypeCard(
-              mbtiType: testMBTIType,
-              index: 0,
-              onTap: () {},
-            ),
+            body: MBTITypeCard(mbtiType: testMBTIType, index: 0, onTap: () {}),
           ),
         ),
       );
@@ -364,7 +348,7 @@ void main() {
 
       // 텍스트가 읽기 가능한 상태인지 확인
       expect(find.text('INTJ'), findsOneWidget);
-      expect(find.text('건축가'), findsOneWidget);
+      expect(find.text('전략가'), findsOneWidget);
     });
   });
 }

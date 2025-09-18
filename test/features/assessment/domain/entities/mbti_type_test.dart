@@ -7,19 +7,19 @@ void main() {
     test('MBTIType 객체가 올바르게 생성되는지 확인', () {
       const mbtiType = MBTIType(
         code: 'INTJ',
-        name: '건축가',
+        name: '전략가',
         category: 'Analysts',
         description: '상상력이 풍부하고 전략적인 사고를 하는 완벽주의자',
         detailedDescription: '자세한 설명',
         strengths: ['전략적 사고', '독립성', '결단력'],
         weaknesses: ['감정 표현 부족', '완벽주의', '타인 의견 무시'],
-        careers: ['과학자', '엔지니어', '건축가'],
+        careers: ['과학자', '엔지니어', '전략가'],
         imagePath: 'assets/INTJ_Architect.jpg',
         primaryColor: Color(0xFF6366F1),
       );
 
       expect(mbtiType.code, 'INTJ');
-      expect(mbtiType.name, '건축가');
+      expect(mbtiType.name, '전략가');
       expect(mbtiType.category, 'Analysts');
       expect(mbtiType.description, '상상력이 풍부하고 전략적인 사고를 하는 완벽주의자');
       expect(mbtiType.strengths.length, 3);
@@ -86,26 +86,26 @@ void main() {
     test('MBTIType 동등성 비교', () {
       const mbtiType1 = MBTIType(
         code: 'INTJ',
-        name: '건축가',
+        name: '전략가',
         category: 'Analysts',
         description: '상상력이 풍부하고 전략적인 사고를 하는 완벽주의자',
         detailedDescription: '자세한 설명',
         strengths: ['전략적 사고', '독립성', '결단력'],
         weaknesses: ['감정 표현 부족', '완벽주의', '타인 의견 무시'],
-        careers: ['과학자', '엔지니어', '건축가'],
+        careers: ['과학자', '엔지니어', '전략가'],
         imagePath: 'assets/INTJ_Architect.jpg',
         primaryColor: Color(0xFF6366F1),
       );
 
       final mbtiType2 = MBTIType(
         code: 'INTJ',
-        name: '건축가',
+        name: '전략가',
         category: 'Analysts',
         description: '상상력이 풍부하고 전략적인 사고를 하는 완벽주의자',
         detailedDescription: '자세한 설명',
         strengths: ['전략적 사고', '독립성', '결단력'],
         weaknesses: ['감정 표현 부족', '완벽주의', '타인 의견 무시'],
-        careers: ['과학자', '엔지니어', '건축가'],
+        careers: ['과학자', '엔지니어', '전략가'],
         imagePath: 'assets/INTJ_Architect.jpg',
         primaryColor: const Color(0xFF6366F1),
       );
@@ -135,13 +135,13 @@ void main() {
     test('MBTIType 속성 변경 불가능성 확인 (immutable)', () {
       const mbtiType = MBTIType(
         code: 'INTJ',
-        name: '건축가',
+        name: '전략가',
         category: 'Analysts',
         description: '상상력이 풍부하고 전략적인 사고를 하는 완벽주의자',
         detailedDescription: '자세한 설명',
         strengths: ['전략적 사고', '독립성', '결단력'],
         weaknesses: ['감정 표현 부족', '완벽주의', '타인 의견 무시'],
-        careers: ['과학자', '엔지니어', '건축가'],
+        careers: ['과학자', '엔지니어', '전략가'],
         imagePath: 'assets/INTJ_Architect.jpg',
         primaryColor: Color(0xFF6366F1),
       );
@@ -158,7 +158,7 @@ void main() {
     test('MBTIType toString 메서드 테스트', () {
       const mbtiType = MBTIType(
         code: 'INTJ',
-        name: '건축가',
+        name: '전략가',
         category: 'Analysts',
         description: '상상력이 풍부하고 전략적인 사고를 하는 완벽주의자',
         detailedDescription: '자세한 설명',
@@ -171,13 +171,13 @@ void main() {
 
       final stringRepresentation = mbtiType.toString();
       expect(stringRepresentation, contains('INTJ'));
-      expect(stringRepresentation, contains('건축가'));
+      expect(stringRepresentation, contains('전략가'));
     });
 
     test('MBTIType helper methods 테스트', () {
       const intjType = MBTIType(
         code: 'INTJ',
-        name: '건축가',
+        name: '전략가',
         category: 'Analysts',
         description: '상상력이 풍부하고 전략적인 사고를 하는 완벽주의자',
         detailedDescription: '자세한 설명',
@@ -219,10 +219,22 @@ void main() {
 
     test('모든 16개 MBTI 타입의 cognitiveFunctions 테스트', () {
       final allTypes = [
-        'INTJ', 'INTP', 'ENTJ', 'ENTP',
-        'INFJ', 'INFP', 'ENFJ', 'ENFP',
-        'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ',
-        'ISTP', 'ISFP', 'ESTP', 'ESFP'
+        'INTJ',
+        'INTP',
+        'ENTJ',
+        'ENTP',
+        'INFJ',
+        'INFP',
+        'ENFJ',
+        'ENFP',
+        'ISTJ',
+        'ISFJ',
+        'ESTJ',
+        'ESFJ',
+        'ISTP',
+        'ISFP',
+        'ESTP',
+        'ESFP',
       ];
 
       for (final typeCode in allTypes) {
@@ -239,10 +251,16 @@ void main() {
           primaryColor: const Color(0xFF000000),
         );
 
-        expect(mbtiType.cognitiveFunctions.length, 4,
-               reason: '$typeCode should have 4 cognitive functions');
-        expect(mbtiType.cognitiveFunctions.every((f) => f.isNotEmpty), true,
-               reason: '$typeCode cognitive functions should not be empty');
+        expect(
+          mbtiType.cognitiveFunctions.length,
+          4,
+          reason: '$typeCode should have 4 cognitive functions',
+        );
+        expect(
+          mbtiType.cognitiveFunctions.every((f) => f.isNotEmpty),
+          true,
+          reason: '$typeCode cognitive functions should not be empty',
+        );
       }
     });
   });

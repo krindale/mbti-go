@@ -48,6 +48,12 @@ class AppColors {
   static const Color grey800 = grey80;
   static const Color grey900 = grey90;
 
+  // Additional colors for widgets
+  static const Color green50 = Color(0xFF22C55E); // Green for strengths
+  static const Color orange50 = Color(0xFFF97316); // Orange for weaknesses
+  static const Color blue50 = Color(0xFF3B82F6); // Blue for compatibility
+  static const Color pink50 = Color(0xFFEC4899); // Pink for best matches
+
   // Carbon inspired gradient colors
   static const List<Color> primaryGradient = [
     Color(0xFF0f62fe),
@@ -85,24 +91,24 @@ class AppColors {
   static Color getMBTITypeColor(String type) {
     const typeColors = {
       // Analysts (NT) - 지적이고 차가운 톤
-      'INTJ': Color(0xFF4C1D95), // 딥 퍼플 (건축가의 신비로움)
-      'INTP': Color(0xFF0F766E), // 틸 (논리술사의 분석력)
-      'ENTJ': Color(0xFF1E40AF), // 로얄 블루 (통솔자의 권위)
-      'ENTP': Color(0xFFEAB308), // 골드 (변론가의 창의성)
+      'INTJ': Color(0xFF4C1D95), // 딥 퍼플 (전략가의 신비로움)
+      'INTP': Color(0xFF0F766E), // 틸 (탐구가의 분석력)
+      'ENTJ': Color(0xFF1E40AF), // 로얄 블루 (지휘관의 권위)
+      'ENTP': Color(0xFFEAB308), // 골드 (혁신가의 창의성)
       // Diplomats (NF) - 자연스럽고 따뜻한 톤
       'INFJ': Color(0xFF065F46), // 딥 에메랄드 (옹호자의 깊이)
-      'INFP': Color(0xFF7C3AED), // 바이올렛 (중재자의 감성)
-      'ENFJ': Color(0xFF0891B2), // 스카이 블루 (선도자의 포용력)
+      'INFP': Color(0xFF7C3AED), // 바이올렛 (몽상가의 감성)
+      'ENFJ': Color(0xFF0891B2), // 스카이 블루 (멘토의 포용력)
       'ENFP': Color(0xFFFF6B35), // 코랄 오렌지 (활동가의 따뜻한 에너지)
       // Sentinels (SJ) - 안정적이고 신뢰감 있는 톤
       'ISTJ': Color(0xFF374151), // 슬레이트 그레이 (현실주의자의 견고함)
       'ISFJ': Color(0xFF92400E), // 어스 브라운 (수호자의 온화함)
       'ESTJ': Color(0xFF1F2937), // 차콜 (경영자의 안정감)
-      'ESFJ': Color(0xFF8B5A83), // 라벤더 퍼플 (집정관의 조화로움)
+      'ESFJ': Color(0xFF8B5A83), // 라벤더 퍼플 (협력자의 조화로움)
       // Explorers (SP) - 활기차고 자유로운 톤
-      'ISTP': Color(0xFF059669), // 민트 그린 (만능재주꾼의 쿨함)
+      'ISTP': Color(0xFF059669), // 민트 그린 (해결사의 쿨함)
       'ISFP': Color(0xFF7C2D12), // 테라코타 (모험가의 자연스러움)
-      'ESTP': Color(0xFFB45309), // 앰버 (사업가의 에너지)
+      'ESTP': Color(0xFFB45309), // 앰버 (도전가의 에너지)
       'ESFP': Color(0xFFF59E0B), // 선샤인 옐로우 (연예인의 밝음)
     };
     return typeColors[type] ?? primary;
