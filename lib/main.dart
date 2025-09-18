@@ -4,7 +4,10 @@ import 'core/theme/app_theme.dart';
 import 'core/theme/app_colors.dart';
 import 'core/theme/app_text_styles.dart';
 import 'core/animations/app_animations.dart';
+import 'core/animations/page_transitions.dart';
 import 'features/assessment/presentation/pages/assessment_page.dart';
+import 'features/assessment/presentation/pages/type_detail_page.dart';
+import 'features/assessment/data/datasources/mbti_data.dart';
 
 void main() {
   runApp(const MBTIApp());
@@ -47,7 +50,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       'category': 'NF',
       'description': '카리스마 리더',
       'detailedDescription':
-          '선도자는 타인의 성장과 발전을 돕는\n천성적인 지도자입니다.\n따뜻한 마음과 강력한 소통 능력으로\n사람들을 이끌어갑니다.',
+          '선도자는 타인의 성장과 발전을 돕는 천성적인 지도자입니다. 따뜻한 마음과 강력한 소통 능력으로 사람들을 이끌어갑니다.',
     },
     {
       'type': 'ENFP',
@@ -56,7 +59,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       'category': 'NF',
       'description': '열정적 자유 영혼',
       'detailedDescription':
-          '활동가는 무한한 창의력과 열정으로\n새로운 가능성을 찾아내는 사람입니다.\n자유롭고 긍정적인 에너지로 사람들을\n고무시킵니다.',
+          '활동가는 무한한 창의력과 열정으로 새로운 가능성을 찾아내는 사람입니다. 자유롭고 긍정적인 에너지로 사람들을 고무시킵니다.',
     },
     {
       'type': 'ENTJ',
@@ -65,7 +68,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       'category': 'NT',
       'description': '강력한 의지의 지도자',
       'detailedDescription':
-          '지휘관은 대담하고 전략적인 사고로\n목표를 달성하는 것을 즐기는 타고난\n리더입니다. 초자연적인 리더십과\n설득력을 가졌습니다.',
+          '지휘관은 대담하고 전략적인 사고로 목표를 달성하는 것을 즐기는 타고난 리더입니다. 초자연적인 리더십과 설득력을 가졌습니다.',
     },
     {
       'type': 'ENTP',
@@ -74,7 +77,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       'category': 'NT',
       'description': '호기심 많은 사상가',
       'detailedDescription':
-          '토론가는 지적 호기심이 뛰어나고\n새로운 아이디어를 탐구하는 것을\n좋아합니다. 반대 의견을 두려워하지\n않는 열정적인 토론가입니다.',
+          '토론가는 지적 호기심이 뛰어나고 새로운 아이디어를 탐구하는 것을 좋아합니다. 반대 의견을 두려워하지 않는 열정적인 토론가입니다.',
     },
     {
       'type': 'ESFJ',
@@ -83,7 +86,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       'category': 'SJ',
       'description': '사교적 인기쟁이',
       'detailedDescription':
-          '집정관은 다른 사람들의 필요를\n민감하게 알아채고 도움을 주는 것을\n좋아합니다. 따뜻하고 배려심 많은\n성격으로 인기가 많습니다.',
+          '집정관은 다른 사람들의 필요를 민감하게 알아채고 도움을 주는 것을 좋아합니다. 따뜻하고 배려심 많은 성격으로 인기가 많습니다.',
     },
     {
       'type': 'ESFP',
@@ -92,7 +95,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       'category': 'SP',
       'description': '열정적 예술가',
       'detailedDescription':
-          '연예인은 즉흥적이고\n열정적인 성격으로 주변 사람들에게\n에너지를 전달합니다. 새로운 경험을\n좋아하고 생동감 넘치는 사람입니다.',
+          '연예인은 즉흥적이고 열정적인 성격으로 주변 사람들에게 에너지를 전달합니다. 새로운 경험을 좋아하고 생동감 넘치는 사람입니다.',
     },
     {
       'type': 'ESTJ',
@@ -101,7 +104,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       'category': 'SJ',
       'description': '뛰어난 관리자',
       'detailedDescription':
-          '경영자는 전통과 질서를 중요시하며\n조직을 효율적으로 운영하는 데\n능숙합니다. 체계적이고 책임감 있는\n리더십을 발휘합니다.',
+          '경영자는 전통과 질서를 중요시하며 조직을 효율적으로 운영하는 데 능숙합니다. 체계적이고 책임감 있는 리더십을 발휘합니다.',
     },
     {
       'type': 'ESTP',
@@ -110,7 +113,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       'category': 'SP',
       'description': '에너지 넘치는 사업가',
       'detailedDescription':
-          '사업가는 현실적이고 에너지가 넘치며\n위기 상황에서도 침착하게 대처하는\n날카로운 문제 해결사입니다.',
+          '사업가는 현실적이고 에너지가 넘치며 위기 상황에서도 침착하게 대처하는 날카로운 문제 해결사입니다.',
     },
     {
       'type': 'INFJ',
@@ -119,7 +122,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       'category': 'NF',
       'description': '신비로운 이상주의자',
       'detailedDescription':
-          '옹호자는 내성적이지만 강한 단호력과\n창의력으로 세상을 바꿀 수 있다고\n믿는 신념의 소유자입니다.',
+          '옹호자는 내성적이지만 강한 단호력과 창의력으로 세상을 바꿀 수 있다고 믿는 신념의 소유자입니다.',
     },
     {
       'type': 'INFP',
@@ -128,7 +131,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       'category': 'NF',
       'description': '친절한 이상주의자',
       'detailedDescription':
-          '중재자는 자신의 가치관과 신념에\n따라 살아가는 진정성 있는\n사람입니다. 다른 사람들의 열정을\n불러일으키는 영감의 원천입니다.',
+          '중재자는 자신의 가치관과 신념에 따라 살아가는 진정성 있는 사람입니다. 다른 사람들의 열정을 불러일으키는 영감의 원천입니다.',
     },
     {
       'type': 'INTJ',
@@ -137,7 +140,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       'category': 'NT',
       'description': '전략적 사고의 건축가',
       'detailedDescription':
-          '건축가는 독립적이고 전략적인 사고를\n통해 자신만의 비전을 만들어가는\n혁신적인 창조자입니다.',
+          '건축가는 독립적이고 전략적인 사고를 통해 자신만의 비전을 만들어가는 혁신적인 창조자입니다.',
     },
     {
       'type': 'INTP',
@@ -146,7 +149,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       'category': 'NT',
       'description': '혁신적인 발명가',
       'detailedDescription':
-          '논리술사는 지식에 대한 갈증이\n뛰어나고 발명이나 혁신을 통해 세상을\n이해하려 하는 이론적 사색가입니다.',
+          '논리술사는 지식에 대한 갈증이 뛰어나고 발명이나 혁신을 통해 세상을 이해하려 하는 이론적 사색가입니다.',
     },
     {
       'type': 'ISFJ',
@@ -155,7 +158,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       'category': 'SJ',
       'description': '따뜻한 수호자',
       'detailedDescription':
-          '수호자는 따뜻하고 이타적인 성격으로\n다른 사람들을 돌보고 보호하는 데\n천부적인 재능을 가진 사람입니다.',
+          '수호자는 따뜻하고 이타적인 성격으로 다른 사람들을 돌보고 보호하는 데 천부적인 재능을 가진 사람입니다.',
     },
     {
       'type': 'ISFP',
@@ -164,7 +167,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       'category': 'SP',
       'description': '매력적인 예술가',
       'detailedDescription':
-          '모험가는 유연하고 매력적인 성격으로\n자신의 가치관과 신념에 따라 살아가는\n예술가적 기질의 소유자입니다.',
+          '모험가는 유연하고 매력적인 성격으로 자신의 가치관과 신념에 따라 살아가는 예술가적 기질의 소유자입니다.',
     },
     {
       'type': 'ISTJ',
@@ -173,7 +176,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       'category': 'SJ',
       'description': '신뢰할 수 있는 현실주의자',
       'detailedDescription':
-          '현실주의자는 실용적이고 사실에\n근거한 신뢰할 수 있는 성격으로\n체계적이고 책임감 있는 사람입니다.',
+          '현실주의자는 실용적이고 사실에 근거한 신뢰할 수 있는 성격으로 체계적이고 책임감 있는 사람입니다.',
     },
     {
       'type': 'ISTP',
@@ -182,7 +185,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       'category': 'SP',
       'description': '실용적 만능재주꾼',
       'detailedDescription':
-          '만능재주꾼은 대담하고 실용적인\n실험정신으로 손으로 무언가를 만들고\n탐구하는 것을 좋아하는 장인정신의\n소유자입니다.',
+          '만능재주꾼은 대담하고 실용적인 실험정신으로 손으로 무언가를 만들고 탐구하는 것을 좋아하는 장인정신의 소유자입니다.',
     },
   ];
 
@@ -262,10 +265,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
                   Container(
                     width: 4,
                     height: 32,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(2),
-                    ),
+                    decoration: const BoxDecoration(color: AppColors.grey80),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -387,17 +387,14 @@ class _MBTIHomePageState extends State<MBTIHomePage>
                         vertical: 2,
                       ),
                       decoration: BoxDecoration(
-                        color: typeColor.withValues(alpha: 0.1),
+                        color: AppColors.grey20,
                         borderRadius: BorderRadius.circular(2),
-                        border: Border.all(
-                          color: typeColor.withValues(alpha: 0.3),
-                          width: 1,
-                        ),
+                        border: Border.all(color: AppColors.grey40, width: 1),
                       ),
                       child: Text(
                         mbtiType['category']!,
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: typeColor,
+                          color: AppColors.grey70,
                           fontSize: 10,
                           fontWeight: FontWeight.w500,
                         ),
@@ -488,15 +485,26 @@ class _MBTIHomePageState extends State<MBTIHomePage>
       child: FloatingActionButton.extended(
         onPressed: () {
           HapticFeedback.lightImpact();
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const AssessmentPage()),
-          );
+          Navigator.of(
+            context,
+          ).push(PageTransitions.slideRight(const AssessmentPage()));
         },
         icon: const Icon(Icons.quiz),
         label: const Text('검사하기'),
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.grey90,
       ),
     );
+  }
+
+  void _navigateToDetailPage(BuildContext context, String typeCode) {
+    final mbtiType = MBTIData.getTypeByCode(typeCode);
+    if (mbtiType != null) {
+      Navigator.of(context).push(
+        PageTransitions.slideRightWithBackground(
+          TypeDetailPage(type: mbtiType),
+        ),
+      );
+    }
   }
 
   void _showMBTIDetail(BuildContext context, Map<String, String> mbtiType) {
@@ -591,9 +599,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
                         Text(
                           '${mbtiType['type']} - ${mbtiType['name']}',
                           style: AppTextStyles.headlineSmall.copyWith(
-                            color: AppColors.getMBTITypeColor(
-                              mbtiType['type']!,
-                            ),
+                            color: AppColors.grey90,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -607,20 +613,13 @@ class _MBTIHomePageState extends State<MBTIHomePage>
                         TapBounceAnimation(
                           onTap: () {
                             Navigator.of(context).pop();
-                            // TODO: Navigate to detailed page
+                            _navigateToDetailPage(context, mbtiType['type']!);
                           },
                           child: Container(
                             width: double.infinity,
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  AppColors.getMBTITypeColor(mbtiType['type']!),
-                                  AppColors.getMBTITypeColor(
-                                    mbtiType['type']!,
-                                  ).withValues(alpha: 0.8),
-                                ],
-                              ),
+                              color: AppColors.grey90,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(

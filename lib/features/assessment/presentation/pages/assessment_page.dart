@@ -6,6 +6,7 @@ import '../../../../core/animations/app_animations.dart';
 import '../../domain/entities/question.dart';
 import '../../domain/entities/assessment_result.dart';
 import '../../data/datasources/mbti_data.dart';
+import '../../data/datasources/mbti_questions_likert.dart';
 import 'result_page.dart';
 
 class AssessmentPage extends StatefulWidget {
@@ -21,7 +22,8 @@ class _AssessmentPageState extends State<AssessmentPage>
   late AnimationController _progressAnimationController;
   late Animation<double> _progressAnimation;
 
-  final List<Question> questions = MBTIData.getQuickAssessmentQuestions();
+  final List<Question> questions =
+      MBTIQuestionsLikert.getQuickAssessmentQuestions();
   final Map<int, Answer> answers = {};
   int currentQuestionIndex = 0;
 
@@ -33,13 +35,12 @@ class _AssessmentPageState extends State<AssessmentPage>
       duration: AppAnimations.normal,
       vsync: this,
     );
-    _progressAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _progressAnimationController,
-      curve: AppAnimations.slideUp,
-    ));
+    _progressAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _progressAnimationController,
+        curve: AppAnimations.slideUp,
+      ),
+    );
     _updateProgress();
   }
 
@@ -51,7 +52,7 @@ class _AssessmentPageState extends State<AssessmentPage>
   }
 
   void _updateProgress() {
-    final progress = (currentQuestionIndex + 1) / questions.length;
+    final progress = currentQuestionIndex / questions.length;
     _progressAnimationController.animateTo(progress);
   }
 
@@ -103,65 +104,109 @@ class _AssessmentPageState extends State<AssessmentPage>
   void _completeAssessment() {
     final result = _calculateResult();
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => ResultPage(result: result),
-      ),
+      MaterialPageRoute(builder: (context) => ResultPage(result: result)),
     );
   }
 
   AssessmentResult _calculateResult() {
-    final scores = <String, double>{
-      'E': 0.0,
-      'I': 0.0,
-      'S': 0.0,
-      'N': 0.0,
-      'T': 0.0,
-      'F': 0.0,
-      'J': 0.0,
-      'P': 0.0,
+    // Initialize dimension scores
+    final dimensionScores = <String, double>{
+      'EI': 0.0, // E/I dimension total score
+      'SN': 0.0, // S/N dimension total score
+      'TF': 0.0, // T/F dimension total score
+      'JP': 0.0, // J/P dimension total score
     };
 
-    // Calculate scores from answers
+    // Count answers per dimension for reliability calculation
+    final answerCounts = <String, int>{'EI': 0, 'SN': 0, 'TF': 0, 'JP': 0};
+
+    // Sum of absolute scores for reliability calculation
+    final absoluteScores = <String, double>{
+      'EI': 0.0,
+      'SN': 0.0,
+      'TF': 0.0,
+      'JP': 0.0,
+    };
+
+    // Calculate scores from answers using 5-point Likert scale
     for (final answer in answers.values) {
-      final preference = answer.selectedOption.preference;
-      final score = answer.selectedOption.score;
-      scores[preference] = (scores[preference] ?? 0.0) + score;
+      final question = questions.firstWhere((q) => q.id == answer.questionId);
+      final score = answer.selectedOption.score; // -2.0 to +2.0
+
+      String dimensionKey;
+      switch (question.dimension) {
+        case QuestionDimension.ei:
+          dimensionKey = 'EI';
+          break;
+        case QuestionDimension.sn:
+          dimensionKey = 'SN';
+          break;
+        case QuestionDimension.tf:
+          dimensionKey = 'TF';
+          break;
+        case QuestionDimension.jp:
+          dimensionKey = 'JP';
+          break;
+      }
+
+      dimensionScores[dimensionKey] = dimensionScores[dimensionKey]! + score;
+      answerCounts[dimensionKey] = answerCounts[dimensionKey]! + 1;
+      absoluteScores[dimensionKey] =
+          absoluteScores[dimensionKey]! + score.abs();
     }
 
-    // Normalize scores (0-1 scale)
-    final totalEI = scores['E']! + scores['I']!;
-    final totalSN = scores['S']! + scores['N']!;
-    final totalTF = scores['T']! + scores['F']!;
-    final totalJP = scores['J']! + scores['P']!;
-
-    if (totalEI > 0) {
-      scores['E'] = scores['E']! / totalEI;
-      scores['I'] = scores['I']! / totalEI;
-    }
-    if (totalSN > 0) {
-      scores['S'] = scores['S']! / totalSN;
-      scores['N'] = scores['N']! / totalSN;
-    }
-    if (totalTF > 0) {
-      scores['T'] = scores['T']! / totalTF;
-      scores['F'] = scores['F']! / totalTF;
-    }
-    if (totalJP > 0) {
-      scores['J'] = scores['J']! / totalJP;
-      scores['P'] = scores['P']! / totalJP;
-    }
-
-    // Determine MBTI type
-    final energyType = scores['E']! > scores['I']! ? 'E' : 'I';
-    final perceptionType = scores['S']! > scores['N']! ? 'S' : 'N';
-    final decisionType = scores['T']! > scores['F']! ? 'T' : 'F';
-    final lifestyleType = scores['J']! > scores['P']! ? 'J' : 'P';
+    // Determine MBTI type based on average scores
+    final energyType = (dimensionScores['EI']! / answerCounts['EI']!) >= 0
+        ? 'E'
+        : 'I';
+    final perceptionType = (dimensionScores['SN']! / answerCounts['SN']!) >= 0
+        ? 'S'
+        : 'N';
+    final decisionType = (dimensionScores['TF']! / answerCounts['TF']!) >= 0
+        ? 'T'
+        : 'F';
+    final lifestyleType = (dimensionScores['JP']! / answerCounts['JP']!) >= 0
+        ? 'J'
+        : 'P';
 
     final typeCode = '$energyType$perceptionType$decisionType$lifestyleType';
     final mbtiType = MBTIData.getTypeByCode(typeCode)!;
 
-    // Calculate reliability (simplified)
-    final reliability = 0.8; // For demo purposes
+    // Calculate reliability based on response consistency
+    double reliability = 0.0;
+
+    // Base reliability on how decisive the answers are
+    for (final dimension in ['EI', 'SN', 'TF', 'JP']) {
+      final maxAbsScore = absoluteScores[dimension]! / answerCounts[dimension]!;
+
+      // Higher scores indicate more decisive answers
+      final dimensionReliability = maxAbsScore / 2.0; // Normalize to 0-1
+      reliability += dimensionReliability;
+    }
+    reliability = (reliability / 4.0).clamp(
+      0.5,
+      0.95,
+    ); // Average and clamp to reasonable range
+
+    // Convert dimension scores to traditional format for display
+    final scores = <String, double>{};
+    for (final dimension in ['EI', 'SN', 'TF', 'JP']) {
+      final avgScore = dimensionScores[dimension]! / answerCounts[dimension]!;
+      final firstLetter = dimension[0];
+      final secondLetter = dimension[1];
+
+      if (avgScore >= 0) {
+        scores[firstLetter] =
+            0.5 + (avgScore / 4.0); // Convert to 0.5-1.0 range
+        scores[secondLetter] =
+            0.5 - (avgScore / 4.0); // Convert to 0.0-0.5 range
+      } else {
+        scores[firstLetter] =
+            0.5 + (avgScore / 4.0); // Convert to 0.0-0.5 range
+        scores[secondLetter] =
+            0.5 - (avgScore / 4.0); // Convert to 0.5-1.0 range
+      }
+    }
 
     return AssessmentResult(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -175,29 +220,28 @@ class _AssessmentPageState extends State<AssessmentPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              AppColors.primary.withValues(alpha: 0.1),
-              AppColors.secondary.withValues(alpha: 0.05),
-              Colors.white,
-            ],
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              _buildHeader(),
-              _buildProgressBar(),
-              Expanded(
-                child: _buildQuestionContent(),
-              ),
-              _buildNavigationButtons(),
-            ],
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        if (currentQuestionIndex > 0) {
+          _previousQuestion();
+        } else {
+          Navigator.of(context).pop();
+        }
+      },
+      child: Scaffold(
+        body: Container(
+          color: AppColors.grey10,
+          child: SafeArea(
+            child: Column(
+              children: [
+                _buildHeader(),
+                _buildProgressBar(),
+                Expanded(child: _buildQuestionContent()),
+                _buildNavigationButtons(),
+              ],
+            ),
           ),
         ),
       ),
@@ -210,25 +254,20 @@ class _AssessmentPageState extends State<AssessmentPage>
       child: Row(
         children: [
           GestureDetector(
-            onTap: () => Navigator.of(context).pop(),
+            onTap: () {
+              if (currentQuestionIndex > 0) {
+                _previousQuestion();
+              } else {
+                Navigator.of(context).pop();
+              }
+            },
             child: Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.white.withValues(alpha: 0.9),
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.grey200.withValues(alpha: 0.5),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
+                color: AppColors.white,
+                border: Border.all(color: AppColors.grey30, width: 1),
               ),
-              child: Icon(
-                Icons.arrow_back,
-                color: AppColors.grey700,
-                size: 24,
-              ),
+              child: Icon(Icons.arrow_back, color: AppColors.grey80, size: 20),
             ),
           ),
           const SizedBox(width: 16),
@@ -272,9 +311,9 @@ class _AssessmentPageState extends State<AssessmentPage>
                 ),
               ),
               Text(
-                '${((currentQuestionIndex + 1) / questions.length * 100).toInt()}%',
+                '${(currentQuestionIndex / questions.length * 100).toInt()}%',
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.primary,
+                  color: AppColors.grey70,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -282,25 +321,29 @@ class _AssessmentPageState extends State<AssessmentPage>
           ),
           const SizedBox(height: 8),
           Container(
-            height: 6,
-            decoration: BoxDecoration(
-              color: AppColors.grey200,
-              borderRadius: BorderRadius.circular(3),
-            ),
+            height: 8,
+            width: double.infinity,
+            decoration: const BoxDecoration(color: AppColors.grey30),
             child: AnimatedBuilder(
               animation: _progressAnimation,
               builder: (context, child) {
-                return FractionallySizedBox(
-                  widthFactor: _progressAnimation.value,
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: AppColors.primaryGradient,
+                final progress = currentQuestionIndex / questions.length;
+                return Row(
+                  children: [
+                    Expanded(
+                      flex: (progress * 1000).toInt(),
+                      child: Container(
+                        height: 8,
+                        decoration: const BoxDecoration(
+                          color: AppColors.grey80,
+                        ),
                       ),
-                      borderRadius: BorderRadius.circular(3),
                     ),
-                  ),
+                    Expanded(
+                      flex: ((1.0 - progress) * 1000).toInt(),
+                      child: const SizedBox(),
+                    ),
+                  ],
                 );
               },
             ),
@@ -333,21 +376,18 @@ class _AssessmentPageState extends State<AssessmentPage>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Card(
-            elevation: 8,
-            shadowColor: AppColors.primary.withValues(alpha: 0.1),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
+            elevation: 2,
+            shadowColor: AppColors.black.withValues(alpha: 0.1),
+            shape: const RoundedRectangleBorder(),
+            color: AppColors.white,
             child: Padding(
               padding: const EdgeInsets.all(32),
               child: Column(
                 children: [
                   Container(
                     padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: AppColors.primaryGradient,
-                      ),
+                    decoration: const BoxDecoration(
+                      color: AppColors.grey80,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -365,74 +405,97 @@ class _AssessmentPageState extends State<AssessmentPage>
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
-                  ...question.options.map((option) {
-                    final isSelected = selectedAnswer?.selectedOption == option;
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: GestureDetector(
+                  // Likert Scale Header
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '전혀\n아니다',
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: AppColors.grey600,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        '보통\n이다',
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: AppColors.grey600,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        '매우\n그렇다',
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: AppColors.grey600,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  // Likert Scale Radio Buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: question.options.map((option) {
+                      final isSelected =
+                          selectedAnswer?.selectedOption == option;
+                      final value = option.value;
+
+                      return GestureDetector(
                         onTap: () => _selectAnswer(option),
                         child: AnimatedContainer(
                           duration: AppAnimations.fast,
-                          curve: Curves.easeInOut,
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(20),
+                          width: 50,
+                          height: 50,
                           decoration: BoxDecoration(
+                            shape: BoxShape.circle,
                             color: isSelected
-                                ? AppColors.primary.withValues(alpha: 0.1)
-                                : AppColors.grey50,
-                            borderRadius: BorderRadius.circular(16),
+                                ? AppColors.grey80
+                                : AppColors.white,
                             border: Border.all(
                               color: isSelected
-                                  ? AppColors.primary
-                                  : AppColors.grey200,
-                              width: 2,
+                                  ? AppColors.grey80
+                                  : AppColors.grey40,
+                              width: isSelected ? 3 : 2,
                             ),
                           ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  color: isSelected
-                                      ? AppColors.primary
-                                      : AppColors.white,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: isSelected
-                                        ? AppColors.primary
-                                        : AppColors.grey300,
-                                    width: 2,
-                                  ),
-                                ),
-                                child: isSelected
-                                    ? Icon(
-                                        Icons.check,
-                                        color: AppColors.white,
-                                        size: 16,
-                                      )
-                                    : null,
+                          child: Center(
+                            child: Text(
+                              value.toString(),
+                              style: AppTextStyles.titleMedium.copyWith(
+                                color: isSelected
+                                    ? AppColors.white
+                                    : AppColors.grey700,
+                                fontWeight: FontWeight.bold,
                               ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Text(
-                                  option.text,
-                                  style: AppTextStyles.bodyLarge.copyWith(
-                                    color: isSelected
-                                        ? AppColors.primary
-                                        : AppColors.grey800,
-                                    fontWeight: isSelected
-                                        ? FontWeight.w600
-                                        : FontWeight.normal,
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 24),
+                  // Selected Option Text
+                  if (selectedAnswer != null)
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: AppColors.grey10,
+                        border: Border.all(color: AppColors.grey30, width: 1),
                       ),
-                    );
-                  }),
+                      child: Text(
+                        selectedAnswer.selectedOption.text,
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          color: AppColors.grey800,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -454,8 +517,8 @@ class _AssessmentPageState extends State<AssessmentPage>
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   decoration: BoxDecoration(
-                    color: AppColors.grey100,
-                    borderRadius: BorderRadius.circular(12),
+                    color: AppColors.white,
+                    border: Border.all(color: AppColors.grey30, width: 1),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -487,19 +550,7 @@ class _AssessmentPageState extends State<AssessmentPage>
                         : _completeAssessment,
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: AppColors.primaryGradient,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primary.withValues(alpha: 0.3),
-                            blurRadius: 8,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
+                      decoration: const BoxDecoration(color: AppColors.grey90),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -524,8 +575,8 @@ class _AssessmentPageState extends State<AssessmentPage>
                 : Container(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     decoration: BoxDecoration(
-                      color: AppColors.grey200,
-                      borderRadius: BorderRadius.circular(12),
+                      color: AppColors.grey20,
+                      border: Border.all(color: AppColors.grey30, width: 1),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

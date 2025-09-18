@@ -3,18 +3,19 @@ import 'package:flutter/services.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/animations/app_animations.dart';
-import '../../domain/entities/assessment_result.dart';
+import '../../domain/entities/mbti_type.dart';
 
-class ResultPage extends StatefulWidget {
-  final AssessmentResult result;
+class TypeDetailPage extends StatefulWidget {
+  final MBTIType type;
 
-  const ResultPage({super.key, required this.result});
+  const TypeDetailPage({super.key, required this.type});
 
   @override
-  State<ResultPage> createState() => _ResultPageState();
+  State<TypeDetailPage> createState() => _TypeDetailPageState();
 }
 
-class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
+class _TypeDetailPageState extends State<TypeDetailPage>
+    with TickerProviderStateMixin {
   late AnimationController _headerAnimationController;
   late AnimationController _contentAnimationController;
   late Animation<double> _headerFadeAnimation;
@@ -56,7 +57,7 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
 
   void _startAnimations() {
     _headerAnimationController.forward();
-    Future.delayed(const Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 300), () {
       _contentAnimationController.forward();
     });
   }
@@ -82,11 +83,12 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
-                      _buildResultCard(),
-                      _buildScoreBreakdown(),
+                      _buildTypeCard(),
+                      _buildDescriptionCard(),
                       _buildStrengthsWeaknesses(),
                       _buildCareerSuggestions(),
-                      _buildDetailedDescription(),
+                      _buildDetailedStory(),
+                      _buildCompatibilitySection(),
                       _buildActionButtons(),
                     ],
                   ),
@@ -129,14 +131,14 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '검사 결과',
+                      '${widget.type.code} - ${widget.type.name}',
                       style: AppTextStyles.headlineSmall.copyWith(
                         color: AppColors.grey900,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      '당신의 성격 유형을 확인해보세요',
+                      widget.type.categoryName,
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.grey600,
                       ),
@@ -151,7 +153,7 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildResultCard() {
+  Widget _buildTypeCard() {
     return BounceInAnimation(
       delay: AppAnimations.staggerDelay(0),
       child: Padding(
@@ -165,39 +167,45 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
             padding: const EdgeInsets.all(32),
             child: Column(
               children: [
-                Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.grey10,
-                    border: Border.all(color: AppColors.grey30, width: 2),
-                  ),
-                  child: ClipOval(
-                    child: Image.asset(
-                      widget.result.type.imagePath,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Icon(
-                          Icons.person,
-                          size: 60,
-                          color: AppColors.white,
-                        );
-                      },
+                Hero(
+                  tag: 'mbti_image_${widget.type.code}',
+                  child: Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: widget.type.primaryColor.withValues(alpha: 0.1),
+                      border: Border.all(
+                        color: widget.type.primaryColor,
+                        width: 3,
+                      ),
+                    ),
+                    child: ClipOval(
+                      child: Image.asset(
+                        widget.type.imagePath,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Icon(
+                            Icons.person,
+                            size: 60,
+                            color: widget.type.primaryColor,
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  widget.result.type.code,
+                  widget.type.code,
                   style: AppTextStyles.displaySmall.copyWith(
-                    color: AppColors.grey90,
+                    color: widget.type.primaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  widget.result.type.name,
+                  widget.type.name,
                   style: AppTextStyles.headlineMedium.copyWith(
                     color: AppColors.grey800,
                   ),
@@ -213,7 +221,7 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
                     border: Border.all(color: AppColors.grey40, width: 1),
                   ),
                   child: Text(
-                    widget.result.type.categoryName,
+                    widget.type.categoryName,
                     style: AppTextStyles.labelLarge.copyWith(
                       color: AppColors.grey70,
                       fontWeight: FontWeight.bold,
@@ -222,32 +230,12 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  widget.result.type.description,
-                  style: AppTextStyles.bodyLarge.copyWith(height: 1.6),
+                  widget.type.description,
+                  style: AppTextStyles.bodyLarge.copyWith(
+                    height: 1.6,
+                    color: AppColors.grey700,
+                  ),
                   textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.verified,
-                      color: widget.result.isReliable
-                          ? AppColors.grey70
-                          : AppColors.grey60,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      '신뢰도: ${(widget.result.reliability * 100).toInt()}%',
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        color: widget.result.isReliable
-                            ? AppColors.grey70
-                            : AppColors.grey60,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),
@@ -257,7 +245,7 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildScoreBreakdown() {
+  Widget _buildDescriptionCard() {
     return BounceInAnimation(
       delay: AppAnimations.staggerDelay(1),
       child: Padding(
@@ -271,42 +259,24 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '세부 점수',
-                  style: AppTextStyles.headlineSmall.copyWith(
-                    color: AppColors.grey900,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  children: [
+                    Icon(Icons.psychology, color: AppColors.grey70, size: 24),
+                    const SizedBox(width: 8),
+                    Text(
+                      '성격 특성',
+                      style: AppTextStyles.headlineSmall.copyWith(
+                        color: AppColors.grey900,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 16),
-                _buildScoreItem(
-                  '외향성 vs 내향성',
-                  'E',
-                  'I',
-                  widget.result.extraversionScore,
-                  widget.result.introversionScore,
-                ),
-                _buildScoreItem(
-                  '감각 vs 직관',
-                  'S',
-                  'N',
-                  widget.result.sensingScore,
-                  widget.result.intuitionScore,
-                ),
-                _buildScoreItem(
-                  '사고 vs 감정',
-                  'T',
-                  'F',
-                  widget.result.thinkingScore,
-                  widget.result.feelingScore,
-                ),
-                _buildScoreItem(
-                  '판단 vs 인식',
-                  'J',
-                  'P',
-                  widget.result.judgingScore,
-                  widget.result.perceivingScore,
-                ),
+                _buildTraitItem('외향성 vs 내향성', widget.type.code[0]),
+                _buildTraitItem('감각 vs 직관', widget.type.code[1]),
+                _buildTraitItem('사고 vs 감정', widget.type.code[2]),
+                _buildTraitItem('판단 vs 인식', widget.type.code[3]),
               ],
             ),
           ),
@@ -315,76 +285,58 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildScoreItem(
-    String title,
-    String left,
-    String right,
-    double leftScore,
-    double rightScore,
-  ) {
-    final dominant = leftScore > rightScore ? left : right;
-    final strength = (leftScore - rightScore).abs();
+  Widget _buildTraitItem(String trait, String preference) {
+    final Map<String, String> traitDescriptions = {
+      'E': '외향적 - 에너지를 외부에서 얻으며 사교적',
+      'I': '내향적 - 에너지를 내부에서 얻으며 신중함',
+      'S': '감각적 - 현실적이고 구체적인 정보 선호',
+      'N': '직관적 - 가능성과 미래 지향적 사고',
+      'T': '사고형 - 논리와 객관성을 중시',
+      'F': '감정형 - 감정과 가치를 중시',
+      'J': '판단형 - 계획적이고 체계적',
+      'P': '인식형 - 유연하고 적응적',
+    };
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                title,
-                style: AppTextStyles.bodyMedium.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                '$dominant (${(strength * 100).toInt()}%)',
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.grey80,
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              color: AppColors.grey80,
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Text(
+                preference,
+                style: AppTextStyles.titleMedium.copyWith(
+                  color: AppColors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            ],
+            ),
           ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Text(
-                left,
-                style: AppTextStyles.bodySmall.copyWith(
-                  fontWeight: FontWeight.bold,
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  trait,
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Stack(
-                  children: [
-                    Container(
-                      height: 8,
-                      decoration: const BoxDecoration(color: AppColors.grey30),
-                    ),
-                    FractionallySizedBox(
-                      widthFactor: leftScore,
-                      child: Container(
-                        height: 8,
-                        decoration: const BoxDecoration(
-                          color: AppColors.grey80,
-                        ),
-                      ),
-                    ),
-                  ],
+                Text(
+                  traitDescriptions[preference] ?? '',
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: AppColors.grey600,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                right,
-                style: AppTextStyles.bodySmall.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
@@ -423,7 +375,7 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
                         ],
                       ),
                       const SizedBox(height: 12),
-                      ...widget.result.type.strengths.map((strength) {
+                      ...widget.type.strengths.map((strength) {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 8),
                           child: Row(
@@ -431,7 +383,7 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
                               Container(
                                 width: 4,
                                 height: 4,
-                                decoration: const BoxDecoration(
+                                decoration: BoxDecoration(
                                   color: AppColors.grey70,
                                   shape: BoxShape.circle,
                                 ),
@@ -481,7 +433,7 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
                         ],
                       ),
                       const SizedBox(height: 12),
-                      ...widget.result.type.weaknesses.map((weakness) {
+                      ...widget.type.weaknesses.map((weakness) {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 8),
                           child: Row(
@@ -547,7 +499,7 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
-                  children: widget.result.type.careers.map((career) {
+                  children: widget.type.careers.map((career) {
                     return Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
@@ -575,7 +527,7 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildDetailedDescription() {
+  Widget _buildDetailedStory() {
     return BounceInAnimation(
       delay: AppAnimations.staggerDelay(4),
       child: Padding(
@@ -604,7 +556,7 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  widget.result.type.detailedDescription,
+                  widget.type.detailedDescription,
                   style: AppTextStyles.bodyLarge.copyWith(
                     height: 1.8,
                     color: AppColors.grey800,
@@ -619,9 +571,80 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildActionButtons() {
+  Widget _buildCompatibilitySection() {
     return BounceInAnimation(
       delay: AppAnimations.staggerDelay(5),
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Card(
+          elevation: 2,
+          shape: const RoundedRectangleBorder(),
+          color: AppColors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.favorite, color: AppColors.grey70, size: 24),
+                    const SizedBox(width: 8),
+                    Text(
+                      '궁합 정보',
+                      style: AppTextStyles.headlineSmall.copyWith(
+                        color: AppColors.grey900,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  '${widget.type.name} 타입과 잘 맞는 성격 유형들을 알아보고 싶다면, 곧 출시될 궁합 분석 기능을 기대해 주세요!',
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.grey600,
+                    height: 1.6,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppColors.grey10,
+                    border: Border.all(color: AppColors.grey30, width: 1),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.info_outline,
+                        color: AppColors.grey70,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          '곧 상세한 궁합 분석 기능이 추가됩니다',
+                          style: AppTextStyles.bodySmall.copyWith(
+                            color: AppColors.grey70,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionButtons() {
+    return BounceInAnimation(
+      delay: AppAnimations.staggerDelay(6),
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -637,7 +660,7 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  decoration: const BoxDecoration(color: AppColors.grey90),
+                  decoration: BoxDecoration(color: AppColors.grey90),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -655,7 +678,7 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
               child: TapBounceAnimation(
                 onTap: () {
                   HapticFeedback.lightImpact();
-                  // TODO: Implement retake assessment
+                  Navigator.of(context).pop();
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -666,10 +689,10 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.refresh, color: AppColors.grey80, size: 20),
+                      Icon(Icons.arrow_back, color: AppColors.grey80, size: 20),
                       const SizedBox(width: 8),
                       Text(
-                        '다시 검사하기',
+                        '이전으로',
                         style: AppTextStyles.buttonText.copyWith(
                           color: AppColors.grey80,
                         ),

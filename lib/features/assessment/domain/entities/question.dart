@@ -23,17 +23,17 @@ class Question extends Equatable {
 
 class QuestionOption extends Equatable {
   final String text;
-  final double score;
-  final String preference; // E, I, S, N, T, F, J, P
+  final double score; // -2.0 to +2.0 for 5-point scale
+  final int value; // 1-5 for Likert scale
 
   const QuestionOption({
     required this.text,
     required this.score,
-    required this.preference,
+    required this.value,
   });
 
   @override
-  List<Object?> get props => [text, score, preference];
+  List<Object?> get props => [text, score, value];
 }
 
 class Answer extends Equatable {
