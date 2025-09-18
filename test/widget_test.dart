@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mbti_go/main.dart';
 import 'package:mbti_go/features/home/presentation/widgets/mbti_type_card.dart';
-import 'package:mbti_go/features/home/presentation/widgets/home_header.dart';
-import 'package:mbti_go/features/home/presentation/widgets/mbti_type_grid.dart';
+import 'package:mbti_go/features/home/presentation/widgets/animated_home_header.dart';
+import 'package:mbti_go/features/home/presentation/widgets/mbti_grid_widget.dart';
 
 void main() {
   group('MBTI Go 앱 메인 위젯 테스트', () {
@@ -22,7 +22,8 @@ void main() {
 
     testWidgets('앱의 홈페이지가 올바르게 표시되는지 확인', (WidgetTester tester) async {
       await tester.pumpWidget(const MBTIApp());
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
       // 기본 구조 확인
       expect(find.byType(Scaffold), findsOneWidget);
@@ -30,13 +31,14 @@ void main() {
       expect(find.byType(Column), findsWidgets);
 
       // 주요 컴포넌트 확인
-      expect(find.byType(HomeHeader), findsOneWidget);
-      expect(find.byType(MBTITypeGrid), findsOneWidget);
+      expect(find.byType(AnimatedHomeHeader), findsOneWidget);
+      expect(find.byType(MBTIGridWidget), findsOneWidget);
     });
 
     testWidgets('앱의 모든 텍스트 요소가 표시되는지 확인', (WidgetTester tester) async {
       await tester.pumpWidget(const MBTIApp());
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
       // 헤더 텍스트 확인
       expect(find.text('MBTI Go'), findsOneWidget);
@@ -52,7 +54,8 @@ void main() {
 
     testWidgets('16개의 MBTI 타입 카드가 모두 표시되는지 확인', (WidgetTester tester) async {
       await tester.pumpWidget(const MBTIApp());
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
       expect(find.byType(MBTITypeCard), findsAtLeastNWidgets(2));
     });
@@ -76,7 +79,8 @@ void main() {
 
     testWidgets('GridView 스크롤이 올바르게 작동하는지 확인', (WidgetTester tester) async {
       await tester.pumpWidget(const MBTIApp());
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
       final gridView = find.byType(GridView);
       expect(gridView, findsOneWidget);
@@ -91,7 +95,8 @@ void main() {
 
     testWidgets('터치 이벤트가 올바르게 처리되는지 확인', (WidgetTester tester) async {
       await tester.pumpWidget(const MBTIApp());
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
       // 검사 시작 버튼 탭 테스트 (warnIfMissed: false로 경고 무시)
       await tester.tap(find.text('MBTI 검사 시작하기'), warnIfMissed: false);
@@ -119,7 +124,8 @@ void main() {
       await tester.binding.setSurfaceSize(const Size(300, 600));
 
       await tester.pumpWidget(const MBTIApp());
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
       expect(find.text('MBTI Go'), findsOneWidget);
       expect(find.byType(MBTITypeCard), findsAtLeastNWidgets(2));
@@ -131,7 +137,8 @@ void main() {
       await tester.binding.setSurfaceSize(const Size(1200, 800));
 
       await tester.pumpWidget(const MBTIApp());
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
       expect(find.text('MBTI Go'), findsOneWidget);
       expect(find.byType(MBTITypeCard), findsAtLeastNWidgets(2));
@@ -153,7 +160,8 @@ void main() {
 
       // 마지막으로 정상 앱 실행
       await tester.pumpWidget(const MBTIApp());
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
       expect(find.text('MBTI Go'), findsOneWidget);
     });
@@ -169,7 +177,8 @@ void main() {
 
     testWidgets('앱의 기본 네비게이션 구조가 올바른지 확인', (WidgetTester tester) async {
       await tester.pumpWidget(const MBTIApp());
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
       // Navigator가 존재하는지 확인
       expect(find.byType(Navigator), findsOneWidget);
@@ -180,7 +189,9 @@ void main() {
 
     testWidgets('앱의 전체 구조가 기대한 대로 구성되어 있는지 확인', (WidgetTester tester) async {
       await tester.pumpWidget(const MBTIApp());
-      await tester.pumpAndSettle();
+      await tester.pump(); // 초기 빌드
+      await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
+      await tester.pump(const Duration(seconds: 2)); // 추가 대기
 
       // Widget 트리 구조 확인
       expect(find.byType(MaterialApp), findsOneWidget);
@@ -189,8 +200,8 @@ void main() {
       expect(find.byType(Column), findsWidgets);
 
       // 필수 위젯들이 존재하는지 확인
-      expect(find.byType(HomeHeader), findsOneWidget);
-      expect(find.byType(MBTITypeGrid), findsOneWidget);
+      expect(find.byType(AnimatedHomeHeader), findsOneWidget);
+      expect(find.byType(MBTIGridWidget), findsOneWidget);
       expect(find.byType(GridView), findsOneWidget);
     });
 

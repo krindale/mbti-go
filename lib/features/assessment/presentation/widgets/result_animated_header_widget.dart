@@ -1,0 +1,70 @@
+import 'package:flutter/material.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/animations/app_animations.dart';
+
+/// MBTI 결과 페이지 애니메이션 헤더 위젯
+/// Single Responsibility: 애니메이션이 적용된 헤더 표시
+class ResultAnimatedHeaderWidget extends StatelessWidget {
+  final Animation<double> fadeAnimation;
+  final Animation<Offset> slideAnimation;
+
+  const ResultAnimatedHeaderWidget({
+    super.key,
+    required this.fadeAnimation,
+    required this.slideAnimation,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SlideTransition(
+      position: slideAnimation,
+      child: FadeTransition(
+        opacity: fadeAnimation,
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Row(
+            children: [
+              TapBounceAnimation(
+                onTap: () => Navigator.of(context).pop(),
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    border: Border.all(color: AppColors.grey30, width: 1),
+                  ),
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: AppColors.grey80,
+                    size: 20,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '검사 결과',
+                      style: AppTextStyles.headlineSmall.copyWith(
+                        color: AppColors.grey900,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '당신의 성격 유형을 확인해보세요',
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: AppColors.grey600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

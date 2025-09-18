@@ -47,8 +47,12 @@ void main() {
       final analysts = MBTITypesRepository.getAnalysts();
 
       expect(analysts.length, 4);
-      expect(analysts.map((type) => type.code).toSet(),
-             {'INTJ', 'INTP', 'ENTJ', 'ENTP'});
+      expect(analysts.map((type) => type.code).toSet(), {
+        'INTJ',
+        'INTP',
+        'ENTJ',
+        'ENTP',
+      });
       expect(analysts.every((type) => type.category == 'NT'), true);
     });
 
@@ -56,8 +60,12 @@ void main() {
       final diplomats = MBTITypesRepository.getDiplomats();
 
       expect(diplomats.length, 4);
-      expect(diplomats.map((type) => type.code).toSet(),
-             {'INFJ', 'INFP', 'ENFJ', 'ENFP'});
+      expect(diplomats.map((type) => type.code).toSet(), {
+        'INFJ',
+        'INFP',
+        'ENFJ',
+        'ENFP',
+      });
       expect(diplomats.every((type) => type.category == 'NF'), true);
     });
 
@@ -65,8 +73,12 @@ void main() {
       final sentinels = MBTITypesRepository.getSentinels();
 
       expect(sentinels.length, 4);
-      expect(sentinels.map((type) => type.code).toSet(),
-             {'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ'});
+      expect(sentinels.map((type) => type.code).toSet(), {
+        'ISTJ',
+        'ISFJ',
+        'ESTJ',
+        'ESFJ',
+      });
       expect(sentinels.every((type) => type.category == 'SJ'), true);
     });
 
@@ -74,8 +86,12 @@ void main() {
       final explorers = MBTITypesRepository.getExplorers();
 
       expect(explorers.length, 4);
-      expect(explorers.map((type) => type.code).toSet(),
-             {'ISTP', 'ISFP', 'ESTP', 'ESFP'});
+      expect(explorers.map((type) => type.code).toSet(), {
+        'ISTP',
+        'ISFP',
+        'ESTP',
+        'ESFP',
+      });
       expect(explorers.every((type) => type.category == 'SP'), true);
     });
 
@@ -107,8 +123,11 @@ void main() {
 
       for (final type in types) {
         // 모든 타입은 4개의 인지 기능을 가져야 함
-        expect(type.cognitiveFunctions.length, 4,
-               reason: '${type.code}는 4개의 인지 기능을 가져야 합니다.');
+        expect(
+          type.cognitiveFunctions.length,
+          4,
+          reason: '${type.code}는 4개의 인지 기능을 가져야 합니다.',
+        );
 
         // 인지 기능들이 비어있지 않은지 확인
         for (final function in type.cognitiveFunctions) {
@@ -131,11 +150,21 @@ void main() {
     });
 
     test('각 카테고리별 타입들의 합집합이 전체 타입과 일치하는지 확인', () {
-      final allTypes = MBTITypesRepository.getAllTypes().map((t) => t.code).toSet();
-      final analysts = MBTITypesRepository.getAnalysts().map((t) => t.code).toSet();
-      final diplomats = MBTITypesRepository.getDiplomats().map((t) => t.code).toSet();
-      final sentinels = MBTITypesRepository.getSentinels().map((t) => t.code).toSet();
-      final explorers = MBTITypesRepository.getExplorers().map((t) => t.code).toSet();
+      final allTypes = MBTITypesRepository.getAllTypes()
+          .map((t) => t.code)
+          .toSet();
+      final analysts = MBTITypesRepository.getAnalysts()
+          .map((t) => t.code)
+          .toSet();
+      final diplomats = MBTITypesRepository.getDiplomats()
+          .map((t) => t.code)
+          .toSet();
+      final sentinels = MBTITypesRepository.getSentinels()
+          .map((t) => t.code)
+          .toSet();
+      final explorers = MBTITypesRepository.getExplorers()
+          .map((t) => t.code)
+          .toSet();
 
       final union = <String>{}
         ..addAll(analysts)
@@ -158,7 +187,7 @@ void main() {
       final types = MBTITypesRepository.getAllTypes();
       final intj = types.firstWhere((type) => type.code == 'INTJ');
 
-      expect(intj.name, '건축가');
+      expect(intj.name, '전략가');
       expect(intj.category, 'NT');
       expect(intj.description.contains('전략적'), true);
       expect(intj.strengths.isNotEmpty, true);
@@ -192,8 +221,11 @@ void main() {
 
         // 파일명이 "MBTI코드_영어이름.jpg" 형식인지 확인
         final expectedPattern = RegExp(r'^assets/[A-Z]{4}_[A-Za-z]+\.jpg$');
-        expect(expectedPattern.hasMatch(type.imagePath), true,
-               reason: '${type.code}의 이미지 경로 형식이 올바르지 않습니다: ${type.imagePath}');
+        expect(
+          expectedPattern.hasMatch(type.imagePath),
+          true,
+          reason: '${type.code}의 이미지 경로 형식이 올바르지 않습니다: ${type.imagePath}',
+        );
       }
     });
   });

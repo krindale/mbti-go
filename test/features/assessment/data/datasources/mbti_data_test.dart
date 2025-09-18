@@ -18,7 +18,7 @@ void main() {
       final intj = MBTIData.getTypeByCode('INTJ');
       expect(intj, isNotNull);
       expect(intj!.code, 'INTJ');
-      expect(intj.name, '건축가');
+      expect(intj.name, '전략가');
 
       final enfp = MBTIData.getTypeByCode('ENFP');
       expect(enfp, isNotNull);
@@ -54,8 +54,12 @@ void main() {
       final analysts = MBTIData.getAnalysts();
 
       expect(analysts.length, 4);
-      expect(analysts.map((type) => type.code).toSet(),
-             {'INTJ', 'INTP', 'ENTJ', 'ENTP'});
+      expect(analysts.map((type) => type.code).toSet(), {
+        'INTJ',
+        'INTP',
+        'ENTJ',
+        'ENTP',
+      });
       expect(analysts.every((type) => type.category == 'NT'), true);
     });
 
@@ -63,8 +67,12 @@ void main() {
       final diplomats = MBTIData.getDiplomats();
 
       expect(diplomats.length, 4);
-      expect(diplomats.map((type) => type.code).toSet(),
-             {'INFJ', 'INFP', 'ENFJ', 'ENFP'});
+      expect(diplomats.map((type) => type.code).toSet(), {
+        'INFJ',
+        'INFP',
+        'ENFJ',
+        'ENFP',
+      });
       expect(diplomats.every((type) => type.category == 'NF'), true);
     });
 
@@ -72,8 +80,12 @@ void main() {
       final sentinels = MBTIData.getSentinels();
 
       expect(sentinels.length, 4);
-      expect(sentinels.map((type) => type.code).toSet(),
-             {'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ'});
+      expect(sentinels.map((type) => type.code).toSet(), {
+        'ISTJ',
+        'ISFJ',
+        'ESTJ',
+        'ESFJ',
+      });
       expect(sentinels.every((type) => type.category == 'SJ'), true);
     });
 
@@ -81,8 +93,12 @@ void main() {
       final explorers = MBTIData.getExplorers();
 
       expect(explorers.length, 4);
-      expect(explorers.map((type) => type.code).toSet(),
-             {'ISTP', 'ISFP', 'ESTP', 'ESFP'});
+      expect(explorers.map((type) => type.code).toSet(), {
+        'ISTP',
+        'ISFP',
+        'ESTP',
+        'ESFP',
+      });
       expect(explorers.every((type) => type.category == 'SP'), true);
     });
 
@@ -202,7 +218,10 @@ void main() {
 
     test('에러 상황에서 안전한 처리가 되는지 확인', () {
       // null 입력
-      expect(() => MBTIData.getTypeByCode(null as dynamic), throwsA(isA<TypeError>()));
+      expect(
+        () => MBTIData.getTypeByCode(null as dynamic),
+        throwsA(isA<TypeError>()),
+      );
 
       // 빈 문자열
       expect(MBTIData.getTypeByCode(''), isNull);

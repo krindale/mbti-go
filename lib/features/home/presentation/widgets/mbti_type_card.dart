@@ -40,6 +40,7 @@ class MBTITypeCard extends StatelessWidget {
             ],
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Carbon-style header with type indicator
@@ -66,7 +67,8 @@ class MBTITypeCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    Expanded(
+                    Flexible(
+                      fit: FlexFit.loose,
                       child: Text(
                         mbtiType.code,
                         style: AppTextStyles.titleMedium.copyWith(
@@ -99,10 +101,12 @@ class MBTITypeCard extends StatelessWidget {
               ),
 
               // Content area
-              Expanded(
+              Flexible(
+                fit: FlexFit.loose,
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Type name
@@ -118,7 +122,8 @@ class MBTITypeCard extends StatelessWidget {
                       const SizedBox(height: 6),
 
                       // Description
-                      Expanded(
+                      Flexible(
+                        fit: FlexFit.loose,
                         child: Text(
                           mbtiType.description,
                           style: AppTextStyles.bodySmall.copyWith(

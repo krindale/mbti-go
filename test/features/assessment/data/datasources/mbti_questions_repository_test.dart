@@ -68,14 +68,14 @@ void main() {
     test('정방향 질문과 역방향 질문이 적절히 섞여 있는지 확인', () {
       final questions = MBTIQuestionsRepository.getQuestions();
 
-      // 현재 구현: 모든 질문이 정방향 (isReversed = false)
+      // 질문 유형 분석: 정방향과 역방향 질문 개수 확인
       final normalQuestions = questions.where((q) => !q.isReversed).length;
       final reversedQuestions = questions.where((q) => q.isReversed).length;
 
       // 실제 구현에 맞춰 검증 (실제 질문 개수 확인)
       final totalQuestions = questions.length;
-      expect(normalQuestions, totalQuestions); // 모든 질문이 정방향
-      expect(reversedQuestions, 0); // 역방향 질문 없음
+      expect(normalQuestions, 13); // 13개의 정방향 질문
+      expect(reversedQuestions, 7); // 7개의 역방향 질문
       expect(normalQuestions + reversedQuestions, totalQuestions);
 
       // 각 차원별로 최소 1개 이상의 질문이 있는지 확인
