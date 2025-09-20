@@ -78,7 +78,7 @@ class AssessmentQuestionContentWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '전혀\n아니다',
+                        '완전히\nA',
                         style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.grey600,
                           fontWeight: FontWeight.w500,
@@ -86,7 +86,7 @@ class AssessmentQuestionContentWidget extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        '보통\n이다',
+                        '중간',
                         style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.grey600,
                           fontWeight: FontWeight.w500,
@@ -94,7 +94,7 @@ class AssessmentQuestionContentWidget extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        '매우\n그렇다',
+                        '완전히\nB',
                         style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.grey600,
                           fontWeight: FontWeight.w500,
