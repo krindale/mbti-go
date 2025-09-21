@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// MBTI 검사 페이지 헤더 위젯
 /// Single Responsibility: 헤더 영역과 뒤로가기 버튼 표시
@@ -39,7 +40,7 @@ class AssessmentHeaderWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'MBTI 간편 검사',
+                  AppLocalizations.of(context)!.mbtiQuickAssessment,
                   style: AppTextStyles.headlineSmall.copyWith(
                     color: AppColors.grey900,
                     fontWeight: FontWeight.bold,

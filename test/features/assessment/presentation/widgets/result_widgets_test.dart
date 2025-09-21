@@ -10,7 +10,6 @@ import 'package:mbti_go/features/assessment/presentation/widgets/result_detailed
 import 'package:mbti_go/features/assessment/presentation/widgets/result_action_buttons_widget.dart';
 import 'package:mbti_go/features/assessment/domain/entities/assessment_result.dart';
 import 'package:mbti_go/features/assessment/domain/entities/mbti_type.dart';
-import 'package:mbti_go/features/assessment/presentation/pages/assessment_page.dart';
 import 'package:mbti_go/core/theme/app_theme.dart';
 
 void main() {

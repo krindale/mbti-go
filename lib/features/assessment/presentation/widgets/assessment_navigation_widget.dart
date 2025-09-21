@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/question.dart';
 
 /// MBTI 검사 페이지 네비게이션 위젯
@@ -52,7 +53,7 @@ class AssessmentNavigationWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        '이전',
+                        AppLocalizations.of(context)!.previous,
                         style: AppTextStyles.buttonText.copyWith(
                           color: AppColors.grey600,
                         ),
@@ -75,7 +76,7 @@ class AssessmentNavigationWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            isLastQuestion ? '완료' : '다음',
+                            isLastQuestion ? AppLocalizations.of(context)!.complete : AppLocalizations.of(context)!.next,
                             style: AppTextStyles.buttonText,
                           ),
                           const SizedBox(width: 8),
@@ -98,7 +99,7 @@ class AssessmentNavigationWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '답변을 선택해주세요',
+                          AppLocalizations.of(context)!.pleaseSelectAnswer,
                           style: AppTextStyles.buttonText.copyWith(
                             color: AppColors.grey500,
                           ),

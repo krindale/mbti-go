@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/animations/app_animations.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/question.dart';
 
 /// MBTI 검사 페이지 질문 콘텐츠 위젯
@@ -28,14 +29,14 @@ class AssessmentQuestionContentWidget extends StatelessWidget {
       itemCount: questions.length,
       itemBuilder: (context, index) {
         return AnimatedSwitcher(
-          duration: AppAnimations.normal,
-          child: _buildQuestionCard(questions[index]),
+          duration: AnimationConstants.normal,
+          child: _buildQuestionCard(context, questions[index]),
         );
       },
     );
   }
 
-  Widget _buildQuestionCard(Question question) {
+  Widget _buildQuestionCard(BuildContext context, Question question) {
     final selectedAnswer = answers[question.id];
 
     return Padding(
@@ -78,7 +79,7 @@ class AssessmentQuestionContentWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '완전히\nA',
+                        AppLocalizations.of(context)!.completelyOptionA,
                         style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.grey600,
                           fontWeight: FontWeight.w500,
@@ -86,7 +87,7 @@ class AssessmentQuestionContentWidget extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        '중간',
+                        AppLocalizations.of(context)!.middle,
                         style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.grey600,
                           fontWeight: FontWeight.w500,
@@ -94,7 +95,7 @@ class AssessmentQuestionContentWidget extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        '완전히\nB',
+                        AppLocalizations.of(context)!.completelyOptionB,
                         style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.grey600,
                           fontWeight: FontWeight.w500,
@@ -115,7 +116,7 @@ class AssessmentQuestionContentWidget extends StatelessWidget {
                       return GestureDetector(
                         onTap: () => onAnswerSelected(option),
                         child: AnimatedContainer(
-                          duration: AppAnimations.fast,
+                          duration: AnimationConstants.fast,
                           width: 50,
                           height: 50,
                           decoration: BoxDecoration(

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/animations/app_animations.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/question.dart';
 import '../../domain/entities/assessment_result.dart';
-import '../../data/datasources/mbti_data.dart';
+import '../../data/datasources/mbti_types_repository.dart';
+import '../../data/services/mbti_localization_service.dart';
 import '../../data/datasources/mbti_questions_likert.dart';
 import '../widgets/assessment_header_widget.dart';
 import '../widgets/assessment_progress_widget.dart';
@@ -25,8 +27,7 @@ class _AssessmentPageState extends State<AssessmentPage>
   late AnimationController _progressAnimationController;
   late Animation<double> _progressAnimation;
 
-  final List<Question> questions =
-      MBTIQuestionsLikert.getQuickAssessmentQuestions();
+  late final List<Question> questions;
   final Map<int, Answer> answers = {};
   int currentQuestionIndex = 0;
 
@@ -35,15 +36,22 @@ class _AssessmentPageState extends State<AssessmentPage>
     super.initState();
     _pageController = PageController();
     _progressAnimationController = AnimationController(
-      duration: AppAnimations.normal,
+      duration: AnimationConstants.normal,
       vsync: this,
     );
     _progressAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _progressAnimationController,
-        curve: AppAnimations.slideUp,
+        curve: AnimationConstants.slideUp,
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Initialize questions with BuildContext when it's available
+    questions = MBTIQuestionsLikert.getQuickAssessmentQuestions(context);
     _updateProgress();
   }
 
@@ -85,8 +93,8 @@ class _AssessmentPageState extends State<AssessmentPage>
       currentQuestionIndex++;
     });
     _pageController.nextPage(
-      duration: AppAnimations.normal,
-      curve: AppAnimations.slideUp,
+      duration: AnimationConstants.normal,
+      curve: AnimationConstants.slideUp,
     );
     _updateProgress();
   }
@@ -97,8 +105,8 @@ class _AssessmentPageState extends State<AssessmentPage>
         currentQuestionIndex--;
       });
       _pageController.previousPage(
-        duration: AppAnimations.normal,
-        curve: AppAnimations.slideUp,
+        duration: AnimationConstants.normal,
+        curve: AnimationConstants.slideUp,
       );
       _updateProgress();
     }
@@ -173,7 +181,10 @@ class _AssessmentPageState extends State<AssessmentPage>
         : 'P';
 
     final typeCode = '$energyType$perceptionType$decisionType$lifestyleType';
-    final mbtiType = MBTIData.getTypeByCode(typeCode)!;
+    final l10n = AppLocalizations.of(context)!;
+    final localizationService = MBTILocalizationService(l10n);
+    final repository = MBTITypesRepository(localizationService);
+    final mbtiType = repository.getTypeByCode(typeCode)!;
 
     // Calculate reliability based on response consistency
     double reliability = 0.0;

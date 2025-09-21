@@ -1,49 +1,60 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mbti_go/features/assessment/data/datasources/mbti_data.dart';
+import 'package:mbti_go/features/assessment/data/datasources/mbti_types_repository.dart';
+import 'package:mbti_go/features/assessment/data/services/mbti_localization_service.dart';
 import 'package:mbti_go/features/assessment/domain/entities/mbti_type.dart';
 import 'package:mbti_go/features/assessment/domain/entities/question.dart';
+import 'package:mbti_go/l10n/app_localizations_ko.dart';
 
 void main() {
   group('MBTIData Facade 테스트', () {
+    late MBTIData mbtiData;
+
+    setUp(() {
+      final localizationService = MBTILocalizationService(AppLocalizationsKo());
+      final typesRepository = MBTITypesRepository(localizationService);
+      mbtiData = MBTIData(typesRepository);
+    });
+
     test('getAllTypes가 16개의 MBTI 타입을 반환하는지 확인', () {
-      final types = MBTIData.getAllTypes();
+      final types = mbtiData.getAllTypes();
 
       expect(types.length, 16);
-      expect(types.every((type) => type is MBTIType), true);
+      expect(types, everyElement(isA<MBTIType>()));
       expect(types.every((type) => type.code.length == 4), true);
     });
 
     test('getTypeByCode가 올바른 타입을 반환하는지 확인', () {
       // 존재하는 타입
-      final intj = MBTIData.getTypeByCode('INTJ');
+      final intj = mbtiData.getTypeByCode('INTJ');
       expect(intj, isNotNull);
       expect(intj!.code, 'INTJ');
       expect(intj.name, '전략가');
 
-      final enfp = MBTIData.getTypeByCode('ENFP');
+      final enfp = mbtiData.getTypeByCode('ENFP');
       expect(enfp, isNotNull);
       expect(enfp!.code, 'ENFP');
       expect(enfp.name, '활동가');
     });
 
     test('getTypeByCode가 존재하지 않는 타입에 대해 null을 반환하는지 확인', () {
-      final invalidType = MBTIData.getTypeByCode('INVALID');
+      final invalidType = mbtiData.getTypeByCode('INVALID');
       expect(invalidType, isNull);
 
-      final emptyType = MBTIData.getTypeByCode('');
+      final emptyType = mbtiData.getTypeByCode('');
       expect(emptyType, isNull);
 
-      final shortType = MBTIData.getTypeByCode('INT');
+      final shortType = mbtiData.getTypeByCode('INT');
       expect(shortType, isNull);
 
-      final longType = MBTIData.getTypeByCode('INTJX');
+      final longType = mbtiData.getTypeByCode('INTJX');
       expect(longType, isNull);
     });
 
     test('getTypeByCode가 대소문자를 구분하는지 확인', () {
-      final upperCase = MBTIData.getTypeByCode('INTJ');
-      final lowerCase = MBTIData.getTypeByCode('intj');
-      final mixedCase = MBTIData.getTypeByCode('IntJ');
+      final upperCase = mbtiData.getTypeByCode('INTJ');
+      final lowerCase = mbtiData.getTypeByCode('intj');
+      final mixedCase = mbtiData.getTypeByCode('IntJ');
 
       expect(upperCase, isNotNull);
       expect(lowerCase, isNull);
@@ -51,7 +62,7 @@ void main() {
     });
 
     test('getAnalysts가 4개의 Analysts 타입을 반환하는지 확인', () {
-      final analysts = MBTIData.getAnalysts();
+      final analysts = mbtiData.getAnalysts();
 
       expect(analysts.length, 4);
       expect(analysts.map((type) => type.code).toSet(), {
@@ -64,7 +75,7 @@ void main() {
     });
 
     test('getDiplomats가 4개의 Diplomats 타입을 반환하는지 확인', () {
-      final diplomats = MBTIData.getDiplomats();
+      final diplomats = mbtiData.getDiplomats();
 
       expect(diplomats.length, 4);
       expect(diplomats.map((type) => type.code).toSet(), {
@@ -77,7 +88,7 @@ void main() {
     });
 
     test('getSentinels가 4개의 Sentinels 타입을 반환하는지 확인', () {
-      final sentinels = MBTIData.getSentinels();
+      final sentinels = mbtiData.getSentinels();
 
       expect(sentinels.length, 4);
       expect(sentinels.map((type) => type.code).toSet(), {
@@ -90,7 +101,7 @@ void main() {
     });
 
     test('getExplorers가 4개의 Explorers 타입을 반환하는지 확인', () {
-      final explorers = MBTIData.getExplorers();
+      final explorers = mbtiData.getExplorers();
 
       expect(explorers.length, 4);
       expect(explorers.map((type) => type.code).toSet(), {
@@ -106,17 +117,17 @@ void main() {
       final questions = MBTIData.getQuestions();
 
       expect(questions.length, 20);
-      expect(questions.every((q) => q is Question), true);
+      expect(questions, everyElement(isA<Question>()));
       expect(questions.every((q) => q.id > 0), true);
     });
 
     test('facade 패턴이 일관된 데이터를 반환하는지 확인', () {
       // getAllTypes와 개별 카테고리 메서드의 합집합이 일치하는지 확인
-      final allTypes = MBTIData.getAllTypes().map((t) => t.code).toSet();
-      final analysts = MBTIData.getAnalysts().map((t) => t.code).toSet();
-      final diplomats = MBTIData.getDiplomats().map((t) => t.code).toSet();
-      final sentinels = MBTIData.getSentinels().map((t) => t.code).toSet();
-      final explorers = MBTIData.getExplorers().map((t) => t.code).toSet();
+      final allTypes = mbtiData.getAllTypes().map((t) => t.code).toSet();
+      final analysts = mbtiData.getAnalysts().map((t) => t.code).toSet();
+      final diplomats = mbtiData.getDiplomats().map((t) => t.code).toSet();
+      final sentinels = mbtiData.getSentinels().map((t) => t.code).toSet();
+      final explorers = mbtiData.getExplorers().map((t) => t.code).toSet();
 
       final union = <String>{}
         ..addAll(analysts)
@@ -128,10 +139,10 @@ void main() {
     });
 
     test('getTypeByCode가 getAllTypes 결과와 일치하는지 확인', () {
-      final allTypes = MBTIData.getAllTypes();
+      final allTypes = mbtiData.getAllTypes();
 
       for (final type in allTypes) {
-        final retrievedType = MBTIData.getTypeByCode(type.code);
+        final retrievedType = mbtiData.getTypeByCode(type.code);
         expect(retrievedType, isNotNull);
         expect(retrievedType!.code, type.code);
         expect(retrievedType.name, type.name);
@@ -141,8 +152,8 @@ void main() {
     });
 
     test('모든 메서드가 동일한 객체 참조를 반환하는지 확인 (캐싱)', () {
-      final types1 = MBTIData.getAllTypes();
-      final types2 = MBTIData.getAllTypes();
+      final types1 = mbtiData.getAllTypes();
+      final types2 = mbtiData.getAllTypes();
 
       expect(types1.length, types2.length);
 
@@ -165,7 +176,7 @@ void main() {
     });
 
     test('16가지 표준 MBTI 타입이 모두 올바르게 분류되어 있는지 확인', () {
-      final allTypes = MBTIData.getAllTypes();
+      final allTypes = mbtiData.getAllTypes();
       final codeToCategory = <String, String>{};
 
       for (final type in allTypes) {
@@ -219,17 +230,17 @@ void main() {
     test('에러 상황에서 안전한 처리가 되는지 확인', () {
       // null 입력
       expect(
-        () => MBTIData.getTypeByCode(null as dynamic),
+        () => mbtiData.getTypeByCode(null as dynamic),
         throwsA(isA<TypeError>()),
       );
 
       // 빈 문자열
-      expect(MBTIData.getTypeByCode(''), isNull);
+      expect(mbtiData.getTypeByCode(''), isNull);
 
       // 잘못된 형식
-      expect(MBTIData.getTypeByCode('123'), isNull);
-      expect(MBTIData.getTypeByCode('ABC'), isNull);
-      expect(MBTIData.getTypeByCode('ABCDE'), isNull);
+      expect(mbtiData.getTypeByCode('123'), isNull);
+      expect(mbtiData.getTypeByCode('ABC'), isNull);
+      expect(mbtiData.getTypeByCode('ABCDE'), isNull);
     });
 
     test('메서드 호출 성능이 일정한지 확인', () {
@@ -237,7 +248,7 @@ void main() {
 
       // 첫 번째 호출
       stopwatch.start();
-      MBTIData.getAllTypes();
+      mbtiData.getAllTypes();
       stopwatch.stop();
       final firstCallTime = stopwatch.elapsedMicroseconds;
 
@@ -245,7 +256,7 @@ void main() {
 
       // 두 번째 호출
       stopwatch.start();
-      MBTIData.getAllTypes();
+      mbtiData.getAllTypes();
       stopwatch.stop();
       final secondCallTime = stopwatch.elapsedMicroseconds;
 
@@ -254,9 +265,9 @@ void main() {
 
       // 반복 호출 테스트
       for (int i = 0; i < 10; i++) {
-        expect(() => MBTIData.getAllTypes(), returnsNormally);
+        expect(() => mbtiData.getAllTypes(), returnsNormally);
         expect(() => MBTIData.getQuestions(), returnsNormally);
-        expect(() => MBTIData.getTypeByCode('INTJ'), returnsNormally);
+        expect(() => mbtiData.getTypeByCode('INTJ'), returnsNormally);
       }
     });
   });

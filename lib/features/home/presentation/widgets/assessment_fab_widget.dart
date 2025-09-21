@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/animations/app_animations.dart';
 import '../../../../core/animations/page_transitions.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../assessment/presentation/pages/assessment_page.dart';
 
 /// 평가 시작 플로팅 액션 버튼 위젯
@@ -12,11 +13,13 @@ class AssessmentFABWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return PulseAnimation(
       child: FloatingActionButton.extended(
         onPressed: () => _navigateToAssessment(context),
         icon: const Icon(Icons.quiz),
-        label: const Text('검사하기'),
+        label: Text(l10n.takeTest),
         backgroundColor: AppColors.grey90,
       ),
     );

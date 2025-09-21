@@ -40,21 +40,8 @@ class MBTIType extends Equatable {
     detailedDescription,
   ];
 
-  // Helper method to get category full name
-  String get categoryName {
-    switch (category) {
-      case 'NT':
-        return '합리주의자';
-      case 'NF':
-        return '이상주의자';
-      case 'SJ':
-        return '수호자';
-      case 'SP':
-        return '예술가';
-      default:
-        return category;
-    }
-  }
+  // Helper method to get localized category full name
+  // This is now handled in the presentation layer using MBTILocalizationService
 
   // Helper method to check if introverted
   bool get isIntroverted => code.startsWith('I');

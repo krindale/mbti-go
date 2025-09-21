@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/animations/app_animations.dart';
 import '../../../../core/animations/page_transitions.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../assessment/presentation/pages/type_detail_page.dart';
-import '../../../assessment/data/datasources/mbti_data.dart';
-import '../../data/models/mbti_type_model.dart';
+import '../../../assessment/data/datasources/mbti_types_repository.dart';
+import '../../../assessment/data/services/mbti_localization_service.dart';
+import '../../../assessment/domain/entities/mbti_type.dart';
 import '../widgets/animated_home_header.dart';
 import '../widgets/mbti_grid_widget.dart';
 import '../widgets/mbti_detail_dialog.dart';
@@ -33,14 +35,14 @@ class _MBTIHomePageState extends State<MBTIHomePage>
 
   void _setupAnimations() {
     _headerAnimationController = AnimationController(
-      duration: AppAnimations.slow,
+      duration: AnimationConstants.slow,
       vsync: this,
     );
 
     _headerFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _headerAnimationController,
-        curve: AppAnimations.fadeIn,
+        curve: AnimationConstants.fadeIn,
       ),
     );
 
@@ -48,7 +50,7 @@ class _MBTIHomePageState extends State<MBTIHomePage>
         Tween<Offset>(begin: const Offset(0, -0.5), end: Offset.zero).animate(
           CurvedAnimation(
             parent: _headerAnimationController,
-            curve: AppAnimations.slideUp,
+            curve: AnimationConstants.slideUp,
           ),
         );
 
@@ -86,17 +88,20 @@ class _MBTIHomePageState extends State<MBTIHomePage>
   }
 
   /// MBTI 타입 선택 처리
-  void _handleTypeSelected(MBTITypeModel mbtiType) {
+  void _handleTypeSelected(MBTIType mbtiType) {
     MBTIDetailDialog.show(
       context: context,
       mbtiType: mbtiType,
-      onDetailPressed: () => _navigateToDetailPage(mbtiType.type),
+      onDetailPressed: () => _navigateToDetailPage(mbtiType.code),
     );
   }
 
   /// 타입 상세 페이지로 이동
   void _navigateToDetailPage(String typeCode) {
-    final mbtiType = MBTIData.getTypeByCode(typeCode);
+    final l10n = AppLocalizations.of(context)!;
+    final localizationService = MBTILocalizationService(l10n);
+    final repository = MBTITypesRepository(localizationService);
+    final mbtiType = repository.getTypeByCode(typeCode);
     if (mbtiType != null) {
       Navigator.of(context).push(
         PageTransitions.slideRightWithBackground(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/animations/app_animations.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// 홈페이지 상단 헤더 위젯
 /// Single Responsibility: 앱 제목과 검사 시작 버튼 표시
@@ -12,6 +13,8 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
       child: Column(
@@ -33,7 +36,7 @@ class HomeHeader extends StatelessWidget {
           BounceInAnimation(
             delay: const Duration(milliseconds: 800),
             child: Text(
-              '당신의 성격 유형을 발견하세요',
+              l10n.homeSubtitleOld,
               style: AppTextStyles.headlineSmall.copyWith(
                 color: AppColors.grey600,
               ),
@@ -58,7 +61,7 @@ class HomeHeader extends StatelessWidget {
                   borderRadius: BorderRadius.circular(28),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primary.withOpacity(0.3),
+                      color: AppColors.primary.withValues(alpha: 0.3),
                       blurRadius: 16,
                       offset: const Offset(0, 8),
                     ),
@@ -71,7 +74,7 @@ class HomeHeader extends StatelessWidget {
                     borderRadius: BorderRadius.circular(28),
                     child: Center(
                       child: Text(
-                        'MBTI 검사 시작하기',
+                        l10n.startAssessment,
                         style: AppTextStyles.headlineSmall.copyWith(
                           color: AppColors.white,
                           fontWeight: FontWeight.w600,
@@ -91,7 +94,7 @@ class HomeHeader extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                '아래 16가지 성격 유형을 탐색하거나\n검사를 통해 당신의 유형을 알아보세요',
+                l10n.exploreTypesDescription.replaceAll('\\n', '\n'),
                 textAlign: TextAlign.center,
                 style: AppTextStyles.bodyLarge.copyWith(
                   color: AppColors.grey500,

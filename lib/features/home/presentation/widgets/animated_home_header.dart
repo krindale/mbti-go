@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/providers/locale_provider.dart';
+import '../../../../core/widgets/language_toggle_switch.dart';
 
 /// 애니메이션이 포함된 홈 헤더 위젯
 /// Single Responsibility: 홈페이지 상단 헤더 표시
@@ -16,6 +20,9 @@ class AnimatedHomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final localeProvider = Provider.of<LocaleProvider>(context);
+
     return SlideTransition(
       position: slideAnimation,
       child: FadeTransition(
@@ -28,39 +35,51 @@ class AnimatedHomeHeader extends StatelessWidget {
               bottom: BorderSide(color: AppColors.grey20, width: 1),
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
             children: [
-              Row(
-                children: [
-                  Container(
-                    width: 4,
-                    height: 32,
-                    decoration: const BoxDecoration(color: AppColors.grey80),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
+              Container(
+                width: 4,
+                height: 32,
+                decoration: const BoxDecoration(color: AppColors.grey80),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Title row with language toggle
+                    Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'MBTI 성격 유형 탐색',
-                          style: AppTextStyles.headlineMedium.copyWith(
-                            color: AppColors.grey100,
-                            fontWeight: FontWeight.w400,
+                        Expanded(
+                          child: Text(
+                            l10n.homeTitle,
+                            style: AppTextStyles.headlineMedium.copyWith(
+                              color: AppColors.grey100,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 8),
-                        Text(
-                          '16가지 성격 유형을 통해\n자신만의 특별한 성격을 발견해보세요',
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.grey70,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 2),
+                          child: LanguageToggleSwitch(
+                            currentLocale: localeProvider.locale,
+                            onLocaleChanged: (locale) {
+                              localeProvider.setLocale(locale);
+                            },
                           ),
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    Text(
+                      l10n.homeSubtitle,
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: AppColors.grey70,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

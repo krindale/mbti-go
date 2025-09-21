@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/animations/app_animations.dart';
-import '../../../assessment/data/datasources/mbti_data.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../assessment/data/datasources/mbti_types_repository.dart';
+import '../../../assessment/data/services/mbti_localization_service.dart';
 import 'mbti_type_card.dart';
 
 /// MBTI 타입들을 그리드 형태로 표시하는 위젯
@@ -13,7 +15,10 @@ class MBTITypeGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mbtiTypes = MBTIData.getAllTypes();
+    final l10n = AppLocalizations.of(context)!;
+    final localizationService = MBTILocalizationService(l10n);
+    final repository = MBTITypesRepository(localizationService);
+    final mbtiTypes = repository.getAllTypes();
 
     return Container(
       color: AppColors.grey10,
@@ -31,8 +36,8 @@ class MBTITypeGrid extends StatelessWidget {
           itemBuilder: (context, index) {
             final mbtiType = mbtiTypes[index];
             return BounceInAnimation(
-              delay: AppAnimations.staggerDelay(index),
-              curve: AppAnimations.elastic,
+              delay: AnimationConstants.staggerDelay(index),
+              curve: AnimationConstants.elastic,
               child: MBTITypeCard(
                 mbtiType: mbtiType,
                 index: index,

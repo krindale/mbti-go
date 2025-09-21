@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/animations/app_animations.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/mbti_type.dart';
 
 /// MBTI 타입 상세 페이지 성격 특성 카드 위젯
@@ -14,7 +15,7 @@ class TypeDetailDescriptionCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BounceInAnimation(
-      delay: AppAnimations.staggerDelay(1),
+      delay: AnimationConstants.staggerDelay(1),
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Card(
@@ -31,7 +32,7 @@ class TypeDetailDescriptionCardWidget extends StatelessWidget {
                     Icon(Icons.psychology, color: AppColors.grey70, size: 24),
                     const SizedBox(width: 8),
                     Text(
-                      '성격 특성',
+                      AppLocalizations.of(context)!.personalityTraits,
                       style: AppTextStyles.headlineSmall.copyWith(
                         color: AppColors.grey900,
                         fontWeight: FontWeight.bold,
@@ -40,10 +41,10 @@ class TypeDetailDescriptionCardWidget extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                _buildTraitItem('외향성 vs 내향성', type.code[0]),
-                _buildTraitItem('감각 vs 직관', type.code[1]),
-                _buildTraitItem('사고 vs 감정', type.code[2]),
-                _buildTraitItem('판단 vs 인식', type.code[3]),
+                _buildTraitItem(context, AppLocalizations.of(context)!.extroversionVsIntroversion, type.code[0]),
+                _buildTraitItem(context, AppLocalizations.of(context)!.sensingVsIntuition, type.code[1]),
+                _buildTraitItem(context, AppLocalizations.of(context)!.thinkingVsFeeling, type.code[2]),
+                _buildTraitItem(context, AppLocalizations.of(context)!.judgingVsPerceiving, type.code[3]),
               ],
             ),
           ),
@@ -52,16 +53,17 @@ class TypeDetailDescriptionCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildTraitItem(String trait, String preference) {
+  Widget _buildTraitItem(BuildContext context, String trait, String preference) {
+    final l10n = AppLocalizations.of(context)!;
     final Map<String, String> traitDescriptions = {
-      'E': '외향적 - 에너지를 외부에서 얻으며 사교적',
-      'I': '내향적 - 에너지를 내부에서 얻으며 신중함',
-      'S': '감각적 - 현실적이고 구체적인 정보 선호',
-      'N': '직관적 - 가능성과 미래 지향적 사고',
-      'T': '사고형 - 논리와 객관성을 중시',
-      'F': '감정형 - 감정과 가치를 중시',
-      'J': '판단형 - 계획적이고 체계적',
-      'P': '인식형 - 유연하고 적응적',
+      'E': l10n.extrovertedDescription,
+      'I': l10n.introvertedDescription,
+      'S': l10n.sensingDescription,
+      'N': l10n.intuitiveDescription,
+      'T': l10n.thinkingDescription,
+      'F': l10n.feelingDescription,
+      'J': l10n.judgingDescription,
+      'P': l10n.perceivingDescription,
     };
 
     return Padding(

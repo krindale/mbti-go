@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/animations/app_animations.dart';
-import '../../data/models/mbti_type_model.dart';
+import '../../../assessment/domain/entities/mbti_type.dart';
 
 /// MBTI 타입 카드 위젯
 /// Single Responsibility: 개별 MBTI 타입 카드 표시
 class MBTICardWidget extends StatelessWidget {
-  final MBTITypeModel mbtiType;
+  final MBTIType mbtiType;
   final int index;
   final VoidCallback onTap;
 
@@ -20,12 +20,12 @@ class MBTICardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final typeColor = AppColors.getMBTITypeColor(mbtiType.type);
+    final typeColor = AppColors.getMBTITypeColor(mbtiType.code);
 
     return TapBounceAnimation(
       onTap: onTap,
       child: Hero(
-        tag: AppAnimations.heroTag(mbtiType.type, index),
+        tag: AnimationConstants.heroTag(mbtiType.code, index),
         child: Container(
           decoration: BoxDecoration(
             color: AppColors.white,
@@ -76,7 +76,7 @@ class MBTICardWidget extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              mbtiType.type,
+              mbtiType.code,
               style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.grey100,
                 fontWeight: FontWeight.w600,
@@ -113,7 +113,7 @@ class MBTICardWidget extends StatelessWidget {
         color: AppColors.white,
         child: Center(
           child: Image.asset(
-            mbtiType.image,
+            mbtiType.imagePath,
             fit: BoxFit.contain,
             width: double.infinity,
             height: double.infinity,

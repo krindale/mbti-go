@@ -34,19 +34,19 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
 
   void _setupAnimations() {
     _headerAnimationController = AnimationController(
-      duration: AppAnimations.slow,
+      duration: AnimationConstants.slow,
       vsync: this,
     );
 
     _contentAnimationController = AnimationController(
-      duration: AppAnimations.verySlow,
+      duration: AnimationConstants.verySlow,
       vsync: this,
     );
 
     _headerFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _headerAnimationController,
-        curve: AppAnimations.fadeIn,
+        curve: AnimationConstants.fadeIn,
       ),
     );
 
@@ -54,7 +54,7 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
         Tween<Offset>(begin: const Offset(0, -0.3), end: Offset.zero).animate(
           CurvedAnimation(
             parent: _headerAnimationController,
-            curve: AppAnimations.slideUp,
+            curve: AnimationConstants.slideUp,
           ),
         );
   }

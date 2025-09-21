@@ -3,12 +3,13 @@ import 'package:flutter/services.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/animations/app_animations.dart';
-import '../../data/models/mbti_type_model.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../assessment/domain/entities/mbti_type.dart';
 
 /// MBTI 상세 정보 다이얼로그
 /// Single Responsibility: MBTI 타입 상세 정보 표시 다이얼로그
 class MBTIDetailDialog extends StatelessWidget {
-  final MBTITypeModel mbtiType;
+  final MBTIType mbtiType;
   final VoidCallback onDetailPressed;
 
   const MBTIDetailDialog({
@@ -20,7 +21,7 @@ class MBTIDetailDialog extends StatelessWidget {
   /// 다이얼로그 표시 메서드
   static void show({
     required BuildContext context,
-    required MBTITypeModel mbtiType,
+    required MBTIType mbtiType,
     required VoidCallback onDetailPressed,
   }) {
     HapticFeedback.mediumImpact();
@@ -83,7 +84,7 @@ class MBTIDetailDialog extends StatelessWidget {
               topRight: Radius.circular(24),
             ),
             child: Image.asset(
-              mbtiType.image,
+              mbtiType.imagePath,
               height: 280,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -133,7 +134,7 @@ class MBTIDetailDialog extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            '${mbtiType.type} - ${mbtiType.name}',
+            '${mbtiType.code} - ${mbtiType.name}',
             style: AppTextStyles.headlineSmall.copyWith(
               color: AppColors.grey90,
             ),
@@ -141,7 +142,7 @@ class MBTIDetailDialog extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            mbtiType.detailedDescription,
+            _getBriefDescription(context, mbtiType.code),
             style: AppTextStyles.mbtiDescription,
             textAlign: TextAlign.center,
           ),
@@ -150,6 +151,31 @@ class MBTIDetailDialog extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  /// 간략한 설명 가져오기
+  String _getBriefDescription(BuildContext context, String code) {
+    final l10n = AppLocalizations.of(context)!;
+    final lowerCode = code.toLowerCase();
+    switch (lowerCode) {
+      case 'enfj': return l10n.enfj_brief;
+      case 'enfp': return l10n.enfp_brief;
+      case 'entj': return l10n.entj_brief;
+      case 'entp': return l10n.entp_brief;
+      case 'esfj': return l10n.esfj_brief;
+      case 'esfp': return l10n.esfp_brief;
+      case 'estj': return l10n.estj_brief;
+      case 'estp': return l10n.estp_brief;
+      case 'infj': return l10n.infj_brief;
+      case 'infp': return l10n.infp_brief;
+      case 'intj': return l10n.intj_brief;
+      case 'intp': return l10n.intp_brief;
+      case 'isfj': return l10n.isfj_brief;
+      case 'isfp': return l10n.isfp_brief;
+      case 'istj': return l10n.istj_brief;
+      case 'istp': return l10n.istp_brief;
+      default: return mbtiType.description;
+    }
   }
 
   /// 자세히 보기 버튼
@@ -167,7 +193,7 @@ class MBTIDetailDialog extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
-          '자세히 보기',
+          AppLocalizations.of(context)!.viewDetails,
           style: AppTextStyles.buttonText,
           textAlign: TextAlign.center,
         ),

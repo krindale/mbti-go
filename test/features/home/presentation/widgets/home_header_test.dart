@@ -7,6 +7,7 @@ import 'package:mbti_go/core/animations/tap_bounce_animation.dart';
 void main() {
   group('HomeHeader 위젯 테스트', () {
     testWidgets('HomeHeader가 기본 요소들을 올바르게 표시하는지 확인', (WidgetTester tester) async {
+      // ignore: unused_local_variable
       bool assessmentStarted = false;
 
       await tester.pumpWidget(
@@ -33,6 +34,7 @@ void main() {
     });
 
     testWidgets('검사 시작 버튼이 올바르게 작동하는지 확인', (WidgetTester tester) async {
+      // ignore: unused_local_variable
       bool assessmentStarted = false;
 
       await tester.pumpWidget(

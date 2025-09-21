@@ -45,7 +45,7 @@ void main() {
       for (final type in types) {
         final color = AppColors.getMBTITypeColor(type);
         expect(color, isA<Color>());
-        expect(color.value, isNot(equals(0))); // 유효한 색상 값인지 확인
+        expect(color.r + color.g + color.b, greaterThan(0)); // 유효한 색상 값인지 확인
       }
 
       // 특정 타입의 실제 색상 값 확인

@@ -18,22 +18,29 @@
 - 📱 **반응형 UI**: 다양한 화면 크기에 최적화된 레이아웃
 - 🎭 **Material 3 디자인**: 최신 Google Material Design 가이드라인 적용
 - ⚡ **높은 성능**: 60fps 애니메이션과 최적화된 렌더링
+- 📝 **MBTI 검사 시스템**: 20문항 간편 검사 완전 구현
+- 🌍 **다국어 지원**: 한국어/영어 자동 감지 및 수동 전환
+- 📊 **결과 분석**: 상세한 성격 분석, 강점/약점, 추천 직업
+- 🔄 **상태 관리**: Provider 패턴으로 언어 설정 및 상태 관리
+- 💾 **데이터 저장**: SharedPreferences를 통한 사용자 설정 저장
 
 ### 계획된 기능 (로드맵)
-- 📝 **MBTI 검사**: 20문항 간편 검사 + 93문항 정식 검사
+- 📝 **MBTI 정식 검사**: 93문항 정식 검사 (간편 검사 완료)
 - 👤 **개인 대시보드**: 맞춤형 인사이트와 일일 팁
 - 💕 **호환성 분석**: 성격 유형 간 관계 분석 및 조언
 - 🌐 **커뮤니티**: 유형별 토론과 경험 공유
-- 📊 **오프라인 지원**: 로컬 저장소와 캐싱
+- 📊 **고급 분석**: 검사 이력 관리 및 발전 추적
 
 ## 🛠 기술 스택
 
 - **Framework**: Flutter 3.9.0+
 - **Language**: Dart
 - **Architecture**: Clean Architecture + Feature-based
-- **State Management**: BLoC (계획)
+- **State Management**: Provider
+- **Localization**: Flutter Intl (ARB files)
+- **Storage**: SharedPreferences
 - **Design System**: Material 3
-- **Testing**: Widget Tests, Unit Tests
+- **Testing**: Widget Tests, Unit Tests, Integration Tests
 
 ## 🚀 시작하기
 
@@ -104,21 +111,50 @@ dart format lib/ test/
 lib/
 ├── main.dart                    # 앱 진입점
 ├── core/                        # 핵심 유틸리티
-│   ├── theme/                   # 디자인 시스템
-│   └── animations/              # 애니메이션 시스템
-├── features/                    # 기능별 구조
-│   ├── assessment/              # MBTI 검사
-│   ├── home/                    # 홈 화면
-│   └── types/                   # 성격 유형 데이터
-└── data/                        # 데이터 레이어
+│   ├── theme/                   # 디자인 시스템 (색상, 테마, 텍스트)
+│   ├── animations/              # 애니메이션 시스템
+│   ├── providers/               # 상태 관리 (LocaleProvider)
+│   └── widgets/                 # 공통 위젯
+├── l10n/                        # 다국어 지원
+│   ├── app_en.arb              # 영어 번역
+│   ├── app_ko.arb              # 한국어 번역
+│   └── *.dart                  # 자동 생성된 localization 파일
+├── features/                    # 기능별 구조 (Clean Architecture)
+│   ├── assessment/              # MBTI 검사 기능
+│   │   ├── data/               # 데이터 레이어 (repositories, datasources)
+│   │   ├── domain/             # 도메인 레이어 (entities, services)
+│   │   └── presentation/       # 프레젠테이션 레이어 (pages, widgets)
+│   └── home/                   # 홈 화면 기능
+│       └── presentation/       # UI 컴포넌트
+└── assets/                     # 정적 리소스
 
 assets/                          # MBTI 이미지 리소스
 └── *.jpg                        # 16가지 성격 유형 이미지
 
 test/                            # 테스트 파일
-├── widget_test.dart             # 위젯 테스트
+├── widget_test.dart             # 메인 위젯 테스트
+├── core/                        # 코어 기능 테스트
 └── features/                    # 기능별 테스트
+
+l10n.yaml                        # 다국어 설정 파일
 ```
+
+## 🌍 다국어 지원
+
+### 지원 언어
+- 🇰🇷 **한국어**: 완전 지원
+- 🇺🇸 **영어**: 완전 지원
+
+### 자동 언어 감지
+- 첫 실행 시 시스템 언어 자동 감지
+- 한국 지역: 한국어 자동 설정
+- 기타 지역: 영어 자동 설정
+- 사용자 수동 변경 시 설정 저장
+
+### 번역 시스템
+- **ARB 파일 기반**: Flutter Intl 표준 사용
+- **실시간 업데이트**: Hot Reload로 번역 즉시 반영
+- **UI 최적화**: 각 언어별 텍스트 길이 최적화
 
 ## 🎨 디자인 시스템
 

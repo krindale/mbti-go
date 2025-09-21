@@ -6,33 +6,36 @@ import 'mbti_questions_repository.dart';
 /// MBTI 데이터에 대한 통합 접근점을 제공하는 파사드 클래스
 /// Single Responsibility: 분리된 저장소들에 대한 단일 진입점 제공
 class MBTIData {
+  final MBTITypesRepository _typesRepository;
+
+  const MBTIData(this._typesRepository);
   // MBTI 타입 관련 메서드들 - MBTITypesRepository로 위임
-  static List<MBTIType> getAllTypes() {
-    return MBTITypesRepository.getAllTypes();
+  List<MBTIType> getAllTypes() {
+    return _typesRepository.getAllTypes();
   }
 
-  static MBTIType? getTypeByCode(String code) {
-    return MBTITypesRepository.getTypeByCode(code);
+  MBTIType? getTypeByCode(String code) {
+    return _typesRepository.getTypeByCode(code);
   }
 
-  static List<MBTIType> getTypesByCategory(String category) {
-    return MBTITypesRepository.getTypesByCategory(category);
+  List<MBTIType> getTypesByCategory(String category) {
+    return _typesRepository.getTypesByCategory(category);
   }
 
-  static List<MBTIType> getAnalysts() {
-    return MBTITypesRepository.getAnalysts();
+  List<MBTIType> getAnalysts() {
+    return _typesRepository.getAnalysts();
   }
 
-  static List<MBTIType> getDiplomats() {
-    return MBTITypesRepository.getDiplomats();
+  List<MBTIType> getDiplomats() {
+    return _typesRepository.getDiplomats();
   }
 
-  static List<MBTIType> getSentinels() {
-    return MBTITypesRepository.getSentinels();
+  List<MBTIType> getSentinels() {
+    return _typesRepository.getSentinels();
   }
 
-  static List<MBTIType> getExplorers() {
-    return MBTITypesRepository.getExplorers();
+  List<MBTIType> getExplorers() {
+    return _typesRepository.getExplorers();
   }
 
   // MBTI 질문 관련 메서드들 - MBTIQuestionsRepository로 위임

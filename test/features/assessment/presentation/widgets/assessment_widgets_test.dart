@@ -149,8 +149,11 @@ void main() {
     });
 
     testWidgets('AssessmentNavigationWidget이 올바르게 렌더링되는지 확인', (WidgetTester tester) async {
+      // ignore: unused_local_variable
       bool previousPressed = false;
+      // ignore: unused_local_variable
       bool nextPressed = false;
+      // ignore: unused_local_variable
       bool completePressed = false;
 
       await tester.pumpWidget(

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/animations/app_animations.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/mbti_type.dart';
+import '../../data/services/mbti_localization_service.dart';
 
 /// MBTI 타입 상세 페이지 애니메이션 헤더 위젯
 /// Single Responsibility: 애니메이션이 적용된 헤더 표시
@@ -20,6 +22,9 @@ class TypeDetailAnimatedHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final localizationService = MBTILocalizationService(l10n);
+
     return SlideTransition(
       position: slideAnimation,
       child: FadeTransition(
@@ -56,7 +61,7 @@ class TypeDetailAnimatedHeaderWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      type.categoryName,
+                      localizationService.getLocalizedCategoryName(type.category),
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.grey600,
                       ),

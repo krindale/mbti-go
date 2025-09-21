@@ -31,7 +31,7 @@ void main() {
 
       // GridView의 itemCount가 16인지 확인
       final gridView = tester.widget<GridView>(find.byType(GridView));
-      expect((gridView as GridView).semanticChildCount, 16);
+      expect(gridView.semanticChildCount, 16);
     });
 
     testWidgets('GridView의 설정이 올바른지 확인', (WidgetTester tester) async {
