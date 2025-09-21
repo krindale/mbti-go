@@ -25,7 +25,7 @@ class MBTITypeCard extends StatelessWidget {
     return TapBounceAnimation(
       onTap: onTap,
       child: Hero(
-        tag: AppAnimations.heroTag(mbtiType.code, index),
+        tag: AnimationConstants.heroTag(mbtiType.code, index),
         child: Container(
           decoration: BoxDecoration(
             color: AppColors.white,
@@ -33,7 +33,7 @@ class MBTITypeCard extends StatelessWidget {
             border: Border.all(color: AppColors.grey20, width: 1),
             boxShadow: [
               BoxShadow(
-                color: AppColors.black.withOpacity(0.1),
+                color: AppColors.black.withValues(alpha: 0.1),
                 blurRadius: 2,
                 offset: const Offset(0, 1),
               ),

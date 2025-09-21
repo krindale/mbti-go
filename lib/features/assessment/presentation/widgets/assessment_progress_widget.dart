@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/animations/app_animations.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// MBTI 검사 페이지 진행률 위젯
 /// Single Responsibility: 검사 진행률 표시
@@ -27,7 +27,7 @@ class AssessmentProgressWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '진행률',
+                AppLocalizations.of(context)!.progressLabel,
                 style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.grey600,
                 ),

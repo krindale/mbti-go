@@ -15,7 +15,8 @@
       "Bash(find:*)",
       "Bash(flutter run:*)",
       "Bash(awk:*)",
-      "Bash(dart format:*)"
+      "Bash(dart format:*)",
+      "Bash(flutter gen-l10n:*)"
     ],
     "deny": [],
     "ask": []

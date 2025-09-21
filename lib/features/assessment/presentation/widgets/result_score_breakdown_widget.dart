@@ -3,6 +3,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/animations/app_animations.dart';
 import '../../domain/entities/assessment_result.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// MBTI 결과 페이지 점수 분석 위젯
 /// Single Responsibility: 세부 점수와 차트 표시
@@ -14,7 +15,7 @@ class ResultScoreBreakdownWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BounceInAnimation(
-      delay: AppAnimations.staggerDelay(1),
+      delay: AnimationConstants.staggerDelay(1),
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Card(
@@ -27,7 +28,7 @@ class ResultScoreBreakdownWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '세부 점수',
+                  AppLocalizations.of(context)!.personalityTraits,
                   style: AppTextStyles.headlineSmall.copyWith(
                     color: AppColors.grey900,
                     fontWeight: FontWeight.bold,
@@ -35,28 +36,28 @@ class ResultScoreBreakdownWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 _buildScoreItem(
-                  '외향성 vs 내향성',
+                  AppLocalizations.of(context)!.extroversionVsIntroversion,
                   'E',
                   'I',
                   result.extraversionScore,
                   result.introversionScore,
                 ),
                 _buildScoreItem(
-                  '감각 vs 직관',
+                  AppLocalizations.of(context)!.sensingVsIntuition,
                   'S',
                   'N',
                   result.sensingScore,
                   result.intuitionScore,
                 ),
                 _buildScoreItem(
-                  '사고 vs 감정',
+                  AppLocalizations.of(context)!.thinkingVsFeeling,
                   'T',
                   'F',
                   result.thinkingScore,
                   result.feelingScore,
                 ),
                 _buildScoreItem(
-                  '판단 vs 인식',
+                  AppLocalizations.of(context)!.judgingVsPerceiving,
                   'J',
                   'P',
                   result.judgingScore,

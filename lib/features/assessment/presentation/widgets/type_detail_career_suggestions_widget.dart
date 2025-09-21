@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/animations/app_animations.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/mbti_type.dart';
 
 /// MBTI 타입 상세 페이지 커리어 제안 위젯
@@ -14,7 +15,7 @@ class TypeDetailCareerSuggestionsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BounceInAnimation(
-      delay: AppAnimations.staggerDelay(3),
+      delay: AnimationConstants.staggerDelay(3),
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Card(
@@ -31,7 +32,7 @@ class TypeDetailCareerSuggestionsWidget extends StatelessWidget {
                     Icon(Icons.work, color: AppColors.grey70, size: 24),
                     const SizedBox(width: 8),
                     Text(
-                      '추천 직업',
+                      AppLocalizations.of(context)!.recommendedCareers,
                       style: AppTextStyles.headlineSmall.copyWith(
                         color: AppColors.grey900,
                         fontWeight: FontWeight.bold,

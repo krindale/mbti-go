@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/animations/app_animations.dart';
 import '../../domain/entities/mbti_type.dart';
@@ -42,19 +41,19 @@ class _TypeDetailPageState extends State<TypeDetailPage>
   /// 애니메이션 설정
   void _setupAnimations() {
     _headerAnimationController = AnimationController(
-      duration: AppAnimations.slow,
+      duration: AnimationConstants.slow,
       vsync: this,
     );
 
     _contentAnimationController = AnimationController(
-      duration: AppAnimations.verySlow,
+      duration: AnimationConstants.verySlow,
       vsync: this,
     );
 
     _headerFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _headerAnimationController,
-        curve: AppAnimations.fadeIn,
+        curve: AnimationConstants.fadeIn,
       ),
     );
 
@@ -62,7 +61,7 @@ class _TypeDetailPageState extends State<TypeDetailPage>
         Tween<Offset>(begin: const Offset(0, -0.3), end: Offset.zero).animate(
           CurvedAnimation(
             parent: _headerAnimationController,
-            curve: AppAnimations.slideUp,
+            curve: AnimationConstants.slideUp,
           ),
         );
   }

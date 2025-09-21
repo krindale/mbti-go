@@ -14,7 +14,7 @@ class ResultCareerSuggestionsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BounceInAnimation(
-      delay: AppAnimations.staggerDelay(3),
+      delay: AnimationConstants.staggerDelay(3),
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Card(

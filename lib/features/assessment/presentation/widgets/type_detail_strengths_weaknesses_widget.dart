@@ -3,6 +3,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/animations/app_animations.dart';
 import '../../domain/entities/mbti_type.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// MBTI 타입 상세 페이지 강점/약점 위젯
 /// Single Responsibility: 강점과 개선점 표시
@@ -14,7 +15,7 @@ class TypeDetailStrengthsWeaknessesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BounceInAnimation(
-      delay: AppAnimations.staggerDelay(2),
+      delay: AnimationConstants.staggerDelay(2),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Row(
@@ -35,7 +36,7 @@ class TypeDetailStrengthsWeaknessesWidget extends StatelessWidget {
                           Icon(Icons.star, color: AppColors.grey70, size: 20),
                           const SizedBox(width: 8),
                           Text(
-                            '강점',
+                            AppLocalizations.of(context)!.strengths,
                             style: AppTextStyles.titleMedium.copyWith(
                               color: AppColors.grey90,
                               fontWeight: FontWeight.bold,
@@ -93,7 +94,7 @@ class TypeDetailStrengthsWeaknessesWidget extends StatelessWidget {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            '개선점',
+                            AppLocalizations.of(context)!.improvementAreas,
                             style: AppTextStyles.titleMedium.copyWith(
                               color: AppColors.grey80,
                               fontWeight: FontWeight.bold,

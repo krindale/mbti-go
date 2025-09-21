@@ -1,12 +1,15 @@
 import '../entities/question.dart';
 import '../entities/assessment_result.dart';
-import '../../data/datasources/mbti_data.dart';
+import '../../data/datasources/mbti_types_repository.dart';
 
 /// MBTI 평가 결과 계산 서비스
 /// Single Responsibility: 평가 답변을 기반으로 MBTI 결과 계산
 class AssessmentCalculator {
+  final MBTITypesRepository _typesRepository;
+
+  const AssessmentCalculator(this._typesRepository);
   /// 답변들을 기반으로 평가 결과 계산
-  static AssessmentResult calculateResult({
+  AssessmentResult calculateResult({
     required List<Question> questions,
     required Map<int, Answer> answers,
   }) {
@@ -93,7 +96,7 @@ class AssessmentCalculator {
     }
 
     // Get type data
-    final typeData = MBTIData.getTypeByCode(mbtiTypeCode)!;
+    final typeData = _typesRepository.getTypeByCode(mbtiTypeCode)!;
 
     return AssessmentResult(
       id: DateTime.now().millisecondsSinceEpoch.toString(),

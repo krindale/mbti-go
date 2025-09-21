@@ -3,6 +3,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/animations/app_animations.dart';
 import '../../domain/entities/mbti_type.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// MBTI 타입 상세 페이지 자세한 설명 위젯
 /// Single Responsibility: 타입의 상세한 이야기와 설명 표시
@@ -14,7 +15,7 @@ class TypeDetailDetailedStoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BounceInAnimation(
-      delay: AppAnimations.staggerDelay(4),
+      delay: AnimationConstants.staggerDelay(4),
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Card(
@@ -31,7 +32,7 @@ class TypeDetailDetailedStoryWidget extends StatelessWidget {
                     Icon(Icons.auto_stories, color: AppColors.grey70, size: 24),
                     const SizedBox(width: 8),
                     Text(
-                      '당신의 이야기',
+                      AppLocalizations.of(context)!.yourStory,
                       style: AppTextStyles.headlineSmall.copyWith(
                         color: AppColors.grey900,
                         fontWeight: FontWeight.bold,

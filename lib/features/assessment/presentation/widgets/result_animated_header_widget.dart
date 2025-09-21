@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/animations/app_animations.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// MBTI 결과 페이지 애니메이션 헤더 위젯
 /// Single Responsibility: 애니메이션이 적용된 헤더 표시
@@ -17,6 +18,8 @@ class ResultAnimatedHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return SlideTransition(
       position: slideAnimation,
       child: FadeTransition(
@@ -46,14 +49,14 @@ class ResultAnimatedHeaderWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '검사 결과',
+                      l10n.testResult,
                       style: AppTextStyles.headlineSmall.copyWith(
                         color: AppColors.grey900,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      '당신의 성격 유형을 확인해보세요',
+                      l10n.checkYourPersonalityType,
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.grey600,
                       ),

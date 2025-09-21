@@ -1,0 +1,261 @@
+{
+  "@@locale": "en",
+  "appTitle": "MBTI Go",
+  "mbtiQuickTest": "MBTI Quick Test",
+  "mbtiFullTest": "MBTI Full Test",
+  "startTest": "Start Test",
+  "homeTitle": "Personality Explorer",
+  "homeSubtitle": "Explore the 16 MBTI personality types",
+  "homeSubtitleOld": "Discover Your Personality Type",
+  "startAssessment": "Start MBTI Assessment",
+  "takeTest": "Take Test",
+  "exploreTypesDescription": "Explore the 16 personality types below or\\ntake the assessment to discover your type",
+  "question": "Question",
+  "ofSeparator": "of",
+  "progress": "Progress",
+  "completelyA": "Completely A",
+  "mostlyA": "Mostly A",
+  "neutral": "Neutral",
+  "mostlyB": "Mostly B",
+  "completelyB": "Completely B",
+  "previous": "Previous",
+  "next": "Next",
+  "complete": "Complete",
+  "results": "Results",
+  "yourType": "Your Type",
+  "reliability": "Reliability",
+  "shareResults": "Share Results",
+  "retakeTest": "Retake Test",
+  "backToHome": "Back to Home",
+  "typeDetails": "Type Details",
+  "strengths": "Strengths",
+  "weaknesses": "Weaknesses",
+  "careers": "Careers",
+  "compatibility": "Compatibility",
+  "description": "Description",
+  "characteristics": "Characteristics",
+  "language": "Language",
+  "korean": "한국어",
+  "english": "English",
+  "koreanShort": "KO",
+  "englishShort": "EN",
+  "question1": "A. I gain energy from talking with many people at parties or large gatherings\nVS\nB. I gain energy from deep conversations with a few close friends",
+  "question2": "A. When problems arise, I immediately discuss with others to find solutions\nVS\nB. When problems arise, I think thoroughly alone before reaching conclusions",
+  "question3": "A. In new environments, I approach others first and start conversations\nVS\nB. In new environments, I observe the situation and wait for others to approach me",
+  "question4": "A. When something is urgent, I immediately call and talk directly\nVS\nB. Even when something is urgent, I prefer texting or emailing after thinking it through",
+  "question5": "A. When stressed, I meet friends and talk to relieve stress\nVS\nB. When stressed, I have alone time to recharge my energy",
+  "question6": "A. I value concrete, detailed facts and data\nVS\nB. I'm more interested in the big picture, concepts, and possibilities",
+  "question7": "A. When planning work, I create detailed and specific step-by-step plans\nVS\nB. When planning work, I set a general direction and proceed flexibly",
+  "question8": "A. When hearing new ideas, I first think about practical applicability\nVS\nB. When hearing new ideas, I'm more excited about future possibilities",
+  "question9": "A. I focus more on past experiences and present reality\nVS\nB. I'm more interested in future possibilities and new changes",
+  "question10": "A. I prefer experiential learning through practice and experience\nVS\nB. I prefer abstract learning through theories and concepts",
+  "question11": "A. When making decisions, I prioritize logical analysis and objective facts\nVS\nB. When making decisions, I consider people's emotions, values, and relationships more",
+  "question12": "A. In conflict situations, I resolve fairly according to principles and rules\nVS\nB. In conflict situations, I resolve harmoniously considering emotions and relationships",
+  "question13": "A. When receiving criticism, I objectively analyze whether it's logically correct\nVS\nB. When receiving criticism, I consider the intent and impact on relationships",
+  "question14": "A. When evaluating others, I prioritize abilities, performance, and objective results\nVS\nB. When evaluating others, I consider character, effort, and personal circumstances more",
+  "question15": "A. In team projects, I focus on efficiency and goal achievement\nVS\nB. In team projects, I prioritize team atmosphere and member satisfaction more",
+  "question16": "A. When planning trips, I complete all detailed schedules and reservations in advance\nVS\nB. When planning trips, I make rough plans and decide spontaneously",
+  "question17": "A. For work with deadlines, I prepare in advance and complete with time to spare\nVS\nB. For work with deadlines, I concentrate and complete as the deadline approaches",
+  "question18": "A. I prefer predictable and stable environments\nVS\nB. I prefer environments with change and new stimuli",
+  "question19": "A. In daily life, I prefer regular and systematic routines\nVS\nB. In daily life, I prefer flexible and free routines",
+  "question20": "A. When new opportunities arise, I carefully review before deciding\nVS\nB. When new opportunities arise, I make quick intuitive decisions and execute",
+
+  "enfj_name": "Mentor",
+  "enfj_description": "Charismatic Leader",
+  "enfj_detailed": "You are a charismatic mentor who inspires others to reach their full potential. With exceptional empathy and natural leadership, you create meaningful connections and guide people toward positive transformation with genuine care and passion.",
+
+  "enfp_name": "Campaigner",
+  "enfp_description": "Passionate Free Spirit",
+  "enfp_detailed": "You are an enthusiastic dreamer who sees endless possibilities in every situation. Your infectious optimism and creative spirit inspire others to embrace change and pursue their dreams with boundless energy and authentic passion.",
+
+  "entj_name": "Commander",
+  "entj_description": "Strong-Willed Leader",
+  "entj_detailed": "You are a natural-born leader who turns ambitious visions into reality. With strategic thinking and unwavering determination, you efficiently organize resources and people to achieve remarkable goals through confident and decisive action.",
+
+  "entp_name": "Debater",
+  "entp_description": "Curious Thinker",
+  "entp_detailed": "You are an innovative thinker who thrives on intellectual challenges and creative problem-solving. Your quick wit and love for debate spark new ideas, pushing boundaries and inspiring others to think differently about the world.",
+
+  "esfj_name": "Consul",
+  "esfj_description": "Social Popular Person",
+  "esfj_detailed": "You are a warm-hearted caregiver who creates harmony wherever you go. Your natural ability to understand others' needs and provide support makes you a beloved friend who brings people together through kindness and genuine concern.",
+
+  "esfp_name": "Entertainer",
+  "esfp_description": "Passionate Artist",
+  "esfp_detailed": "You are a vibrant soul who brings joy and excitement to every moment. Your spontaneous nature and zest for life inspire others to embrace the present, creating memorable experiences filled with laughter and genuine human connection.",
+
+  "estj_name": "Executive",
+  "estj_description": "Excellent Manager",
+  "estj_detailed": "You are a reliable leader who builds strong foundations for success. Your systematic approach and dedication to excellence create order from chaos, while your practical wisdom guides others toward achieving meaningful and lasting results.",
+
+  "estp_name": "Entrepreneur",
+  "estp_description": "Energetic Challenger",
+  "estp_detailed": "You are an adaptable problem-solver who thrives in dynamic environments. Your quick thinking and hands-on approach help you navigate challenges with confidence, while your energetic presence motivates others to take bold action.",
+
+  "infj_name": "Advocate",
+  "infj_description": "Mysterious Idealist",
+  "infj_detailed": "You are a visionary idealist with deep insight into human nature. Your quiet strength and unwavering compassion drive you to create meaningful change, turning profound understanding into actions that heal and inspire the world around you.",
+
+  "infp_name": "Mediator",
+  "infp_description": "Kind Idealist",
+  "infp_detailed": "You are an authentic soul who lives by deeply held values and beliefs. Your quiet passion and creative spirit inspire others to discover their true selves, creating ripples of positive change through genuine self-expression and empathy.",
+
+  "intj_name": "Architect",
+  "intj_description": "Strategic Thinking Architect",
+  "intj_detailed": "You are a strategic mastermind who transforms complex ideas into elegant solutions. Your independent thinking and long-term vision enable you to see patterns others miss, creating innovative pathways to achieve ambitious goals with precision and purpose.",
+
+  "intp_name": "Thinker",
+  "intp_description": "Innovative Inventor",
+  "intp_detailed": "You are a curious explorer of ideas who seeks to understand the fundamental principles of everything. Your innovative thinking and logical analysis uncover hidden connections, leading to breakthrough insights that advance human knowledge and understanding.",
+
+  "isfj_name": "Protector",
+  "isfj_description": "Warm Protector",
+  "isfj_detailed": "You are a devoted guardian who quietly nurtures and protects those you care about. Your selfless dedication and attention to detail create safe havens where others can flourish, embodying compassion through consistent and thoughtful actions.",
+
+  "isfp_name": "Adventurer",
+  "isfp_description": "Charming Artist",
+  "isfp_detailed": "You are a gentle artist who expresses beauty and meaning through creative pursuits. Your sensitive nature and strong values guide you to live authentically, inspiring others through your unique perspective and quiet acts of kindness.",
+
+  "istj_name": "Logistician",
+  "istj_description": "Reliable Realist",
+  "istj_detailed": "You are a dependable foundation upon which others can build their dreams. Your methodical approach and unwavering reliability create stability and trust, while your practical wisdom ensures that important tasks are completed with excellence and integrity.",
+
+  "istp_name": "Virtuoso",
+  "istp_description": "Practical Problem Solver",
+  "istp_detailed": "You are a skilled craftsperson who masters tools and techniques with natural ease. Your practical intelligence and calm problem-solving approach enable you to fix, build, and improve the world around you through hands-on expertise and innovation.",
+
+  "goBackHome": "Back to Home",
+  "retakeTest": "Retake Test",
+  "goBack": "Go Back",
+
+  "categoryAnalysts": "Analysts",
+  "categoryDiplomats": "Diplomats",
+  "categorySentinels": "Sentinels",
+  "categoryExplorers": "Explorers",
+
+  "compatibilityInfo": "Compatibility Information",
+  "compatibilityFeatureComingSoon": "If you want to learn about personality types that match well with {typeName} type, please look forward to the upcoming compatibility analysis feature!",
+  "@compatibilityFeatureComingSoon": {
+    "placeholders": {
+      "typeName": {
+        "type": "String"
+      }
+    }
+  },
+  "compatibilityFeatureNote": "Detailed compatibility analysis feature will be added soon",
+  "testResult": "Test Result",
+  "checkYourPersonalityType": "Check your personality type",
+  "viewDetails": "View Details",
+
+  "mbtiQuickAssessment": "MBTI Quick Assessment",
+  "pleaseSelectAnswer": "Please select an answer",
+  "progressLabel": "Progress",
+  "completelyOptionA": "Completely\nA",
+  "middle": "Middle",
+  "completelyOptionB": "Completely\nB",
+  "reliabilityPercentage": "Reliability {percentage}%",
+  "@reliabilityPercentage": {
+    "placeholders": {
+      "percentage": {
+        "type": "int"
+      }
+    }
+  },
+  "yourStory": "Your Story",
+  "recommendedCareers": "Recommended Careers",
+  "personalityTraits": "Personality Traits",
+  "extroversionVsIntroversion": "Extroversion vs Introversion",
+  "sensingVsIntuition": "Sensing vs Intuition",
+  "thinkingVsFeeling": "Thinking vs Feeling",
+  "judgingVsPerceiving": "Judging vs Perceiving",
+  "extrovertedDescription": "Gains energy from social interaction",
+  "introvertedDescription": "Gains energy from quiet reflection",
+  "sensingDescription": "Focuses on concrete facts and details",
+  "intuitiveDescription": "Focuses on patterns and possibilities",
+  "thinkingDescription": "Makes decisions based on logic",
+  "feelingDescription": "Makes decisions based on values",
+  "judgingDescription": "Prefers structure and closure",
+  "perceivingDescription": "Prefers flexibility and openness",
+  "improvementAreas": "Areas for\nGrowth",
+
+  "intj_strengths": "Strategic thinking|Independence|Determination|Focus|Creativity",
+  "intj_weaknesses": "Overly critical|Lack of social skills|Difficulty expressing emotions|Perfectionism",
+  "intj_careers": "Scientist|Engineer|Architect|Researcher|Strategic planner",
+
+  "intp_strengths": "Logical thinking|Creativity|Objectivity|Adaptability|Analytical skills",
+  "intp_weaknesses": "Indecisiveness|Lack of focus|Ignoring emotions|Unrealistic",
+  "intp_careers": "Researcher|Software developer|Analyst|Professor|Inventor",
+
+  "entj_strengths": "Natural leadership|Strategic vision|Efficiency|Confidence|Goal-oriented",
+  "entj_weaknesses": "Impatience|Stubbornness|Intolerance|Aggressive|Workaholic",
+  "entj_careers": "CEO|Manager|Consultant|Lawyer|Entrepreneur",
+
+  "entp_strengths": "Innovation|Enthusiasm|Versatility|Quick thinking|Charisma",
+  "entp_weaknesses": "Procrastination|Inconsistency|Argumentative|Scattered focus",
+  "entp_careers": "Entrepreneur|Consultant|Journalist|Inventor|Marketing specialist",
+
+  "infj_strengths": "Insight|Empathy|Dedication|Creativity|Integrity",
+  "infj_weaknesses": "Perfectionism|Sensitivity|Burnout|Stubbornness",
+  "infj_careers": "Counselor|Writer|Teacher|Psychologist|Social worker",
+
+  "infp_strengths": "Authenticity|Empathy|Creativity|Flexibility|Idealism",
+  "infp_weaknesses": "Oversensitivity|Procrastination|Self-criticism|Conflict avoidance",
+  "infp_careers": "Writer|Artist|Counselor|Social worker|Designer",
+
+  "enfj_strengths": "Charisma|Empathy|Leadership|Communication|Motivation",
+  "enfj_weaknesses": "Overprotective|Self-sacrifice|Sensitivity|Idealistic",
+  "enfj_careers": "Teacher|Counselor|Manager|Coach|Social worker",
+
+  "enfp_strengths": "Enthusiasm|Creativity|Social skills|Adaptability|Optimism",
+  "enfp_weaknesses": "Procrastination|Overthinking|Difficulty with details|Emotional volatility",
+  "enfp_careers": "Marketing specialist|Journalist|Teacher|Consultant|Artist",
+
+  "istj_strengths": "Reliability|Practicality|Organization|Responsibility|Dedication",
+  "istj_weaknesses": "Stubbornness|Resistance to change|Judgmental|Workaholic",
+  "istj_careers": "Accountant|Manager|Administrator|Engineer|Auditor",
+
+  "isfj_strengths": "Compassion|Reliability|Attention to detail|Loyalty|Supportiveness",
+  "isfj_weaknesses": "Self-neglect|Oversensitivity|Resistance to change|Reluctance to ask for help",
+  "isfj_careers": "Nurse|Teacher|Social worker|Administrator|Counselor",
+
+  "estj_strengths": "Leadership|Organization|Efficiency|Reliability|Dedication",
+  "estj_weaknesses": "Stubbornness|Impatience|Difficulty with emotions|Judgmental",
+  "estj_careers": "Manager|Administrator|Military officer|Judge|Business executive",
+
+  "esfj_strengths": "Social skills|Empathy|Organization|Loyalty|Helpfulness",
+  "esfj_weaknesses": "Need for approval|Sensitivity to criticism|Difficulty saying no|Stress under conflict",
+  "esfj_careers": "Teacher|Nurse|Administrator|Social worker|Event planner",
+
+  "istp_strengths": "Practicality|Adaptability|Problem-solving|Independence|Efficiency",
+  "istp_weaknesses": "Reserved|Insensitive|Risk-taking|Difficulty with emotions",
+  "istp_careers": "Engineer|Mechanic|Pilot|Detective|Computer programmer",
+
+  "isfp_strengths": "Creativity|Empathy|Flexibility|Loyalty|Authenticity",
+  "isfp_weaknesses": "Sensitivity|Procrastination|Difficulty with criticism|Conflict avoidance",
+  "isfp_careers": "Artist|Designer|Counselor|Teacher|Photographer",
+
+  "estp_strengths": "Adaptability|Practical skills|Energy|Social skills|Problem-solving",
+  "estp_weaknesses": "Impatience|Risk-taking|Difficulty with long-term planning|Insensitive",
+  "estp_careers": "Sales representative|Entrepreneur|Police officer|Paramedic|Sports coach",
+
+  "esfp_strengths": "Enthusiasm|People skills|Creativity|Adaptability|Optimism",
+  "esfp_weaknesses": "Easily bored|Procrastination|Difficulty with criticism|Conflict avoidance",
+  "esfp_careers": "Teacher|Entertainer|Sales representative|Social worker|Event planner",
+
+  "intj_brief": "Strategic visionary who creates innovative solutions through independent thinking.",
+  "intp_brief": "Curious intellectual who explores ideas and seeks deep understanding.",
+  "entj_brief": "Natural leader who turns ambitious visions into remarkable achievements.",
+  "entp_brief": "Creative innovator who thrives on intellectual challenges and debate.",
+  "infj_brief": "Insightful idealist who creates meaningful change through compassion.",
+  "infp_brief": "Authentic soul who inspires others through genuine self-expression.",
+  "enfj_brief": "Charismatic mentor who guides others toward their full potential.",
+  "enfp_brief": "Enthusiastic dreamer who sees endless possibilities everywhere.",
+  "istj_brief": "Dependable foundation who ensures excellence through reliability.",
+  "isfj_brief": "Devoted guardian who nurtures and protects those they cherish.",
+  "estj_brief": "Reliable leader who builds strong foundations for lasting success.",
+  "esfj_brief": "Warm caregiver who creates harmony through kindness and support.",
+  "istp_brief": "Skilled craftsperson who masters tools with practical intelligence.",
+  "isfp_brief": "Gentle artist who expresses beauty through creative authenticity.",
+  "estp_brief": "Adaptable problem-solver who thrives in dynamic environments.",
+  "esfp_brief": "Vibrant soul who brings joy and excitement to every moment."
+}

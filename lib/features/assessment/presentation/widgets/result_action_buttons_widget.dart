@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/animations/app_animations.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../pages/assessment_page.dart';
 
 /// MBTI 결과 페이지 액션 버튼 위젯
@@ -12,8 +13,9 @@ class ResultActionButtonsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return BounceInAnimation(
-      delay: AppAnimations.staggerDelay(5),
+      delay: AnimationConstants.staggerDelay(5),
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -35,7 +37,7 @@ class ResultActionButtonsWidget extends StatelessWidget {
                     children: [
                       Icon(Icons.home, color: AppColors.white, size: 20),
                       const SizedBox(width: 8),
-                      Text('홈으로 돌아가기', style: AppTextStyles.buttonText),
+                      Text(l10n.goBackHome, style: AppTextStyles.buttonText),
                     ],
                   ),
                 ),
@@ -65,7 +67,7 @@ class ResultActionButtonsWidget extends StatelessWidget {
                       Icon(Icons.refresh, color: AppColors.grey80, size: 20),
                       const SizedBox(width: 8),
                       Text(
-                        '다시 검사하기',
+                        l10n.retakeTest,
                         style: AppTextStyles.buttonText.copyWith(
                           color: AppColors.grey80,
                         ),

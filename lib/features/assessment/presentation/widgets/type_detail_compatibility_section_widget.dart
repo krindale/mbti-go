@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/animations/app_animations.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/mbti_type.dart';
 
 /// MBTI 타입 상세 페이지 궁합 섹션 위젯
@@ -13,8 +14,10 @@ class TypeDetailCompatibilitySectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return BounceInAnimation(
-      delay: AppAnimations.staggerDelay(5),
+      delay: AnimationConstants.staggerDelay(5),
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Card(
@@ -31,7 +34,7 @@ class TypeDetailCompatibilitySectionWidget extends StatelessWidget {
                     Icon(Icons.favorite, color: AppColors.grey70, size: 24),
                     const SizedBox(width: 8),
                     Text(
-                      '궁합 정보',
+                      l10n.compatibilityInfo,
                       style: AppTextStyles.headlineSmall.copyWith(
                         color: AppColors.grey900,
                         fontWeight: FontWeight.bold,
@@ -41,7 +44,7 @@ class TypeDetailCompatibilitySectionWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  '${type.name} 타입과 잘 맞는 성격 유형들을 알아보고 싶다면, 곧 출시될 궁합 분석 기능을 기대해 주세요!',
+                  l10n.compatibilityFeatureComingSoon(type.name),
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.grey600,
                     height: 1.6,
@@ -65,7 +68,7 @@ class TypeDetailCompatibilitySectionWidget extends StatelessWidget {
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          '곧 상세한 궁합 분석 기능이 추가됩니다',
+                          l10n.compatibilityFeatureNote,
                           style: AppTextStyles.bodySmall.copyWith(
                             color: AppColors.grey70,
                             fontWeight: FontWeight.w600,

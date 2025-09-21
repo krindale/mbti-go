@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mbti_go/main.dart';
+import 'package:mbti_go/core/providers/locale_provider.dart';
 import 'package:mbti_go/features/home/presentation/widgets/mbti_type_card.dart';
 import 'package:mbti_go/features/home/presentation/widgets/animated_home_header.dart';
 import 'package:mbti_go/features/home/presentation/widgets/mbti_grid_widget.dart';
@@ -8,7 +9,7 @@ import 'package:mbti_go/features/home/presentation/widgets/mbti_grid_widget.dart
 void main() {
   group('MBTI Go 앱 메인 위젯 테스트', () {
     testWidgets('MBTIApp이 올바른 설정으로 생성되는지 확인', (WidgetTester tester) async {
-      await tester.pumpWidget(const MBTIApp());
+      await tester.pumpWidget(MBTIApp(localeProvider: LocaleProvider()));
 
       // MaterialApp 확인
       final materialApp = tester.widget<MaterialApp>(find.byType(MaterialApp));
@@ -21,7 +22,7 @@ void main() {
     });
 
     testWidgets('앱의 홈페이지가 올바르게 표시되는지 확인', (WidgetTester tester) async {
-      await tester.pumpWidget(const MBTIApp());
+      await tester.pumpWidget(MBTIApp(localeProvider: LocaleProvider()));
       await tester.pump(); // 초기 빌드
       await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
@@ -36,7 +37,7 @@ void main() {
     });
 
     testWidgets('앱의 모든 텍스트 요소가 표시되는지 확인', (WidgetTester tester) async {
-      await tester.pumpWidget(const MBTIApp());
+      await tester.pumpWidget(MBTIApp(localeProvider: LocaleProvider()));
       await tester.pump(); // 초기 빌드
       await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
@@ -53,7 +54,7 @@ void main() {
     });
 
     testWidgets('16개의 MBTI 타입 카드가 모두 표시되는지 확인', (WidgetTester tester) async {
-      await tester.pumpWidget(const MBTIApp());
+      await tester.pumpWidget(MBTIApp(localeProvider: LocaleProvider()));
       await tester.pump(); // 초기 빌드
       await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
@@ -61,7 +62,7 @@ void main() {
     });
 
     testWidgets('애니메이션이 올바르게 작동하는지 확인', (WidgetTester tester) async {
-      await tester.pumpWidget(const MBTIApp());
+      await tester.pumpWidget(MBTIApp(localeProvider: LocaleProvider()));
 
       // 초기 프레임
       await tester.pump();
@@ -78,7 +79,7 @@ void main() {
     });
 
     testWidgets('GridView 스크롤이 올바르게 작동하는지 확인', (WidgetTester tester) async {
-      await tester.pumpWidget(const MBTIApp());
+      await tester.pumpWidget(MBTIApp(localeProvider: LocaleProvider()));
       await tester.pump(); // 초기 빌드
       await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
@@ -94,7 +95,7 @@ void main() {
     });
 
     testWidgets('터치 이벤트가 올바르게 처리되는지 확인', (WidgetTester tester) async {
-      await tester.pumpWidget(const MBTIApp());
+      await tester.pumpWidget(MBTIApp(localeProvider: LocaleProvider()));
       await tester.pump(); // 초기 빌드
       await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
@@ -111,7 +112,7 @@ void main() {
     });
 
     testWidgets('앱 테마가 올바르게 적용되어 있는지 확인', (WidgetTester tester) async {
-      await tester.pumpWidget(const MBTIApp());
+      await tester.pumpWidget(MBTIApp(localeProvider: LocaleProvider()));
 
       final materialApp = tester.widget<MaterialApp>(find.byType(MaterialApp));
       final theme = materialApp.theme;
@@ -123,7 +124,7 @@ void main() {
     testWidgets('작은 화면에서도 올바르게 렌더링되는지 확인', (WidgetTester tester) async {
       await tester.binding.setSurfaceSize(const Size(300, 600));
 
-      await tester.pumpWidget(const MBTIApp());
+      await tester.pumpWidget(MBTIApp(localeProvider: LocaleProvider()));
       await tester.pump(); // 초기 빌드
       await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
@@ -136,7 +137,7 @@ void main() {
     testWidgets('큰 화면에서도 올바르게 렌더링되는지 확인', (WidgetTester tester) async {
       await tester.binding.setSurfaceSize(const Size(1200, 800));
 
-      await tester.pumpWidget(const MBTIApp());
+      await tester.pumpWidget(MBTIApp(localeProvider: LocaleProvider()));
       await tester.pump(); // 초기 빌드
       await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
@@ -149,7 +150,7 @@ void main() {
     testWidgets('앱이 메모리 누수 없이 정상적으로 작동하는지 확인', (WidgetTester tester) async {
       // 여러 번 앱을 생성하고 제거
       for (int i = 0; i < 3; i++) {
-        await tester.pumpWidget(const MBTIApp());
+        await tester.pumpWidget(MBTIApp(localeProvider: LocaleProvider()));
         await tester.pumpAndSettle();
 
         expect(find.text('MBTI Go'), findsOneWidget);
@@ -159,7 +160,7 @@ void main() {
       }
 
       // 마지막으로 정상 앱 실행
-      await tester.pumpWidget(const MBTIApp());
+      await tester.pumpWidget(MBTIApp(localeProvider: LocaleProvider()));
       await tester.pump(); // 초기 빌드
       await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
@@ -167,7 +168,7 @@ void main() {
     });
 
     testWidgets('다크 테마가 설정되어 있는지 확인', (WidgetTester tester) async {
-      await tester.pumpWidget(const MBTIApp());
+      await tester.pumpWidget(MBTIApp(localeProvider: LocaleProvider()));
 
       final materialApp = tester.widget<MaterialApp>(find.byType(MaterialApp));
 
@@ -176,7 +177,7 @@ void main() {
     });
 
     testWidgets('앱의 기본 네비게이션 구조가 올바른지 확인', (WidgetTester tester) async {
-      await tester.pumpWidget(const MBTIApp());
+      await tester.pumpWidget(MBTIApp(localeProvider: LocaleProvider()));
       await tester.pump(); // 초기 빌드
       await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
 
@@ -188,7 +189,7 @@ void main() {
     });
 
     testWidgets('앱의 전체 구조가 기대한 대로 구성되어 있는지 확인', (WidgetTester tester) async {
-      await tester.pumpWidget(const MBTIApp());
+      await tester.pumpWidget(MBTIApp(localeProvider: LocaleProvider()));
       await tester.pump(); // 초기 빌드
       await tester.pump(const Duration(seconds: 2)); // 애니메이션 진행
       await tester.pump(const Duration(seconds: 2)); // 추가 대기
@@ -206,7 +207,7 @@ void main() {
     });
 
     testWidgets('앱이 오류 없이 완전히 로드되는지 확인', (WidgetTester tester) async {
-      await tester.pumpWidget(const MBTIApp());
+      await tester.pumpWidget(MBTIApp(localeProvider: LocaleProvider()));
 
       // 점진적으로 프레임을 렌더링하며 오류 확인
       for (int i = 0; i < 10; i++) {

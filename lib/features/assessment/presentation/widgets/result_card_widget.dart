@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/animations/app_animations.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/assessment_result.dart';
+import '../../data/services/mbti_localization_service.dart';
 
 /// MBTI 결과 페이지 메인 결과 카드 위젯
 /// Single Responsibility: 결과 타입과 기본 정보 표시
@@ -13,8 +15,11 @@ class ResultCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final localizationService = MBTILocalizationService(l10n);
+
     return BounceInAnimation(
-      delay: AppAnimations.staggerDelay(0),
+      delay: AnimationConstants.staggerDelay(0),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Card(
@@ -80,7 +85,7 @@ class ResultCardWidget extends StatelessWidget {
                     border: Border.all(color: AppColors.grey40, width: 1),
                   ),
                   child: Text(
-                    result.type.categoryName,
+                    localizationService.getLocalizedCategoryName(result.type.category),
                     style: AppTextStyles.labelLarge.copyWith(
                       color: AppColors.grey70,
                       fontWeight: FontWeight.bold,
@@ -106,7 +111,7 @@ class ResultCardWidget extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      '신뢰도: ${(result.reliability * 100).toInt()}%',
+                      AppLocalizations.of(context)!.reliabilityPercentage((result.reliability * 100).toInt()),
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: result.isReliable
                             ? AppColors.grey70

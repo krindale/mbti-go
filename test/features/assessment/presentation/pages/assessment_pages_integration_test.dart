@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
 import 'package:mbti_go/features/assessment/presentation/pages/assessment_page.dart';
 import 'package:mbti_go/features/assessment/presentation/pages/result_page.dart';
 import 'package:mbti_go/features/assessment/presentation/pages/type_detail_page.dart';
 import 'package:mbti_go/features/assessment/domain/entities/assessment_result.dart';
 import 'package:mbti_go/features/assessment/domain/entities/mbti_type.dart';
 import 'package:mbti_go/core/theme/app_theme.dart';
+import 'package:mbti_go/l10n/app_localizations.dart';
+import 'package:mbti_go/core/providers/locale_provider.dart';
 
 void main() {
   group('Assessment 페이지들 통합 테스트', () {
@@ -46,7 +49,20 @@ void main() {
     });
 
     Widget createTestApp(Widget home) {
-      return MaterialApp(theme: AppTheme.lightTheme, home: home);
+      return ChangeNotifierProvider(
+        create: (_) => LocaleProvider(),
+        child: Consumer<LocaleProvider>(
+          builder: (context, localeProvider, _) {
+            return MaterialApp(
+              theme: AppTheme.lightTheme,
+              locale: localeProvider.locale,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              home: home,
+            );
+          },
+        ),
+      );
     }
 
     testWidgets('AssessmentPage가 올바르게 렌더링되고 기본 기능이 작동하는지 확인', (
@@ -270,7 +286,8 @@ void main() {
 
       expect(find.text(testType.code), findsAtLeastNWidgets(1));
       expect(find.text(testType.name), findsAtLeastNWidgets(1));
-      expect(find.text(testType.categoryName), findsAtLeastNWidgets(1));
+      // Check for localized category name (NT = 분석가 in Korean)
+      expect(find.text('분석가'), findsAtLeastNWidgets(1));
 
       // ResultPage에 AssessmentResult 전달 테스트
       await tester.pumpWidget(createTestApp(ResultPage(result: testResult)));
